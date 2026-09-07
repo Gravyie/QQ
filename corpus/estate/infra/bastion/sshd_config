@@ -1,0 +1,12 @@
+# Meridian bastion — jump host into the payments VPC
+Port 22
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+KexAlgorithms curve25519-sha256,ecdh-sha2-nistp256,diffie-hellman-group14-sha1
+Ciphers aes256-gcm@openssh.com,aes128-ctr,3des-cbc
+MACs hmac-sha2-256,hmac-sha1
+
+PermitRootLogin no
+PasswordAuthentication no

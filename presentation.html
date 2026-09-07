@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Atlas — Enterprise Cryptographic Discovery &amp; Analysis Tool</title>
+<style>
+  :root{
+    --bg:#0b0f14; --bg2:#10161e; --panel:#141c26; --line:#223041;
+    --ink:#e8eef4; --mut:#93a3b4; --dim:#5d6f81;
+    --acc:#3ddc84; --acc-dim:rgba(61,220,132,.14);
+    --amber:#f5b544; --red:#f26d6d; --blue:#6cb8f2; --violet:#b79df2;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+  /* progress */
+  #prog{position:fixed;top:0;left:0;height:3px;background:var(--acc);width:0;z-index:50;transition:width .35s ease}
+  /* slides */
+  #deck{height:100dvh;width:100%}
+  .slide{display:none;height:100dvh;width:100%;padding:56px 8vw 96px;position:relative;overflow:hidden}
+  .slide.active{display:flex;flex-direction:column;justify-content:center;gap:26px;animation:enter .45s cubic-bezier(.16,1,.3,1)}
+  @keyframes enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.slide.active{animation:none}#prog{transition:none}}
+  .slide::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(900px 480px at 85% 8%,rgba(61,220,132,.07),transparent 60%),
+               radial-gradient(700px 500px at 5% 95%,rgba(108,184,242,.06),transparent 60%)}
+  .k{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc)}
+  h1{font-size:clamp(40px,6vw,84px);line-height:1.02;letter-spacing:-.03em;font-weight:750}
+  h2{font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-.02em;font-weight:700;max-width:20ch}
+  h2 .it{font-style:italic;color:var(--acc)}
+  p.sub{color:var(--mut);font-size:clamp(15px,1.5vw,19px);line-height:1.6;max-width:62ch}
+  .mono{font-family:var(--mono)}
+  /* grids + cards */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{font-size:17px;margin-bottom:8px;letter-spacing:-.01em}
+  .card p{color:var(--mut);font-size:14px;line-height:1.6}
+  .card .n{font-family:var(--mono);font-size:12px;color:var(--acc);letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:10px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .stat b{display:block;font-size:clamp(28px,3vw,42px);letter-spacing:-.02em;font-weight:750}
+  .stat span{color:var(--mut);font-size:13px}
+  .stat b.g{color:var(--acc)} .stat b.a{color:var(--amber)} .stat b.r{color:var(--red)} .stat b.b{color:var(--blue)}
+  /* bars */
+  .bar-row{display:grid;grid-template-columns:150px 1fr 64px;gap:12px;align-items:center;font-size:13px;margin:9px 0}
+  .bar-row .lb{color:var(--mut);font-family:var(--mono);font-size:12px}
+  .bar{height:10px;background:#1c2634;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px;width:0;transition:width .9s cubic-bezier(.16,1,.3,1)}
+  .bar-row .vl{font-family:var(--mono);text-align:right}
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  td{padding:10px 12px;border-bottom:1px solid #182230;color:var(--ink)}
+  td.m{color:var(--mut)} td.mono{font-size:13px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:3px 10px;border-radius:99px;border:1px solid var(--line)}
+  .p-red{color:var(--red);border-color:rgba(242,109,109,.4);background:rgba(242,109,109,.08)}
+  .p-amber{color:var(--amber);border-color:rgba(245,181,68,.4);background:rgba(245,181,68,.08)}
+  .p-green{color:var(--acc);border-color:rgba(61,220,132,.4);background:rgba(61,220,132,.08)}
+  .p-blue{color:var(--blue);border-color:rgba(108,184,242,.4);background:rgba(108,184,242,.08)}
+  /* formula */
+  .formula{font-family:var(--mono);font-size:clamp(22px,3vw,38px);background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:26px 30px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .formula .bad{color:var(--red)} .formula .ok{color:var(--acc)}
+  /* waves timeline */
+  .wave{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:13px 18px;font-size:14px}
+  .wave .w{font-family:var(--mono);color:var(--acc);font-size:12px}
+  .wave .t{color:var(--mut);font-size:13px}
+  .wave .e{font-family:var(--mono);font-size:13px}
+  /* chrome */
+  #hud{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+    padding:16px 32px;font-family:var(--mono);font-size:12px;color:var(--dim);z-index:40}
+  #hud .keys span{border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-left:6px;color:var(--mut)}
+  #dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:40}
+  #dots i{width:8px;height:8px;border-radius:99px;background:#2a3a4e;cursor:pointer;transition:all .25s}
+  #dots i.on{background:var(--acc);transform:scale(1.35)}
+  #over{position:fixed;inset:0;background:rgba(5,8,12,.94);display:none;z-index:60;padding:6vh 8vw;overflow:auto}
+  #over.open{display:block}
+  #over .ogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  #over .ocell{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:12.5px;cursor:pointer;color:var(--mut)}
+  #over .ocell b{display:block;color:var(--ink);font-size:13px;margin-bottom:4px}
+  #over .ocell:hover{border-color:var(--acc)}
+  .term{background:#070b10;border:1px solid var(--line);border-radius:14px;padding:22px 24px;font-family:var(--mono);font-size:14px;line-height:1.9}
+  .term .g{color:var(--acc)} .term .d{color:var(--dim)} .term .y{color:var(--amber)} .term .c{color:var(--blue)}
+  .cols{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
+  a{color:var(--acc)}
+  @media (max-width:900px){
+    .grid2,.grid3,.grid4,.cols{grid-template-columns:1fr}
+    .slide{padding:40px 6vw 90px;gap:18px;justify-content:flex-start;overflow-y:auto}
+    #dots{display:none} #over .ogrid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="deck">
+
+  <!-- 1 TITLE -->
+  <section class="slide">
+    <div class="k">SIH 26164 &nbsp;·&nbsp; NTRO &nbsp;·&nbsp; Enterprise Cryptographic Discovery &amp; Analysis Tool</div>
+    <h1>Quantum Atlas</h1>
+    <p class="sub">Find every cryptographic artefact in the estate, decide which ones a quantum computer breaks&nbsp;— and when — and turn that into a costed migration programme you can argue with.</p>
+    <div class="term"><span class="d">$</span> atlas scan corpus/estate<br><span class="g">101 artefacts · 34 files · sub-second</span> &nbsp;<span class="d">→</span> <span class="c">CBOM + SARIF + report + plan</span></div>
+  </section>
+
+  <!-- 2 PROBLEM -->
+  <section class="slide">
+    <div class="k">The problem</div>
+    <h2>Harvest now, <span class="it">decrypt later.</span></h2>
+    <div class="grid3">
+      <div class="card"><span class="n">Shor's algorithm</span><h3>Asymmetric crypto falls entirely</h3><p>RSA, ECDSA, ECDH, Ed25519 drop to zero bits of post-quantum strength. Everything they ever encrypted or signed is exposed.</p></div>
+      <div class="card"><span class="n">Grover's algorithm</span><h3>Symmetric strength halves</h3><p>AES-128 keeps ~64 bits of margin. AES-256 and SHA-384 stay comfortable. The answer differs per algorithm, not per vibe.</p></div>
+      <div class="card"><span class="n">Mosca's inequality</span><h3>Some data is already lost</h3><p>If shelf-life + migration time exceeds years-until-CRQC, adversaries harvesting ciphertext today win before you finish migrating.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 NOT A GREPPER -->
+  <section class="slide">
+    <div class="k">Why this is not a regex grepper</div>
+    <h2>Four things carry <span class="it">the weight.</span></h2>
+    <div class="grid4">
+      <div class="card"><span class="n">01</span><h3>Evidence, not assertions</h3><p>Every artefact records file:line, snippet, container layer or binary section. Nothing exists without provenance you can click.</p></div>
+      <div class="card"><span class="n">02</span><h3>Mosca is a control</h3><p>CRQC year, shelf-life, migration time and headcount are sliders. Re-simulation re-runs the pure risk model — never a rescan.</p></div>
+      <div class="card"><span class="n">03</span><h3>Real wire evidence</h3><p>Live TLS handshakes: version, cipher, key-exchange group, legacy acceptance, served chain. Measured, not assumed.</p></div>
+      <div class="card"><span class="n">04</span><h3>A programme, not a list</h3><p>Dependency-ordered waves with effort in engineer-days and a plain finish-before-horizon verdict.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 DISCOVERY -->
+  <section class="slide">
+    <div class="k">Discovery</div>
+    <h2>What is <span class="it">in the estate?</span></h2>
+    <div class="cols">
+      <div>
+        <div class="bar-row"><span class="lb">source</span><div class="bar"><i data-w="96" style="background:var(--acc)"></i></div><span class="vl">~90 patterns</span></div>
+        <div class="bar-row"><span class="lb">certificates</span><div class="bar"><i data-w="88" style="background:var(--blue)"></i></div><span class="vl">PEM + DER</span></div>
+        <div class="bar-row"><span class="lb">keys</span><div class="bar"><i data-w="72" style="background:var(--violet)"></i></div><span class="vl">6 markers</span></div>
+        <div class="bar-row"><span class="lb">containers</span><div class="bar"><i data-w="64" style="background:var(--amber)"></i></div><span class="vl">no daemon</span></div>
+        <div class="bar-row"><span class="lb">binaries</span><div class="bar"><i data-w="58" style="background:var(--amber)"></i></div><span class="vl">ELF/PE/Mach-O</span></div>
+        <div class="bar-row"><span class="lb">live TLS</span><div class="bar"><i data-w="80" style="background:var(--red)"></i></div><span class="vl">12 hosts</span></div>
+      </div>
+      <div class="card"><span class="n">Coverage</span><h3>16 languages · manifests · IaC · KMS/HSM</h3><p>Python, Java, JS/TS, Go, C/C++, C#, Ruby, PHP, Rust — plus requirements, package.json, pom.xml, go.mod, Terraform, K8s, nginx/Apache/SSH configs, AWS/GCP/Azure KMS and PKCS#11/HSM markers. Findings stream over SSE as the walk proceeds, with paths.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 RISK MODEL -->
+  <section class="slide">
+    <div class="k">Risk model — derived from the knowledge base, not guessed</div>
+    <h2>Impact classes &amp; <span class="it">Mosca.</span></h2>
+    <div class="grid2">
+      <div>
+        <table>
+          <tr><th>Class</th><th>Meaning</th><th>PQ strength</th></tr>
+          <tr><td><span class="pill p-red">shor_broken</span></td><td class="m">RSA, ECDSA, ECDH…</td><td class="mono">0 bits</td></tr>
+          <tr><td><span class="pill p-amber">grover</span></td><td class="m">AES-128, 3DES…</td><td class="mono">halved</td></tr>
+          <tr><td><span class="pill p-red">broken_classically</span></td><td class="m">MD5, SHA-1, RC4…</td><td class="mono">— already</td></tr>
+          <tr><td><span class="pill p-blue">classical_ok</span></td><td class="m">AES-256, SHA-384</td><td class="mono">≥128 bits</td></tr>
+          <tr><td><span class="pill p-green">pq_safe</span></td><td class="m">ML-KEM, ML-DSA…</td><td class="mono">≥128 bits</td></tr>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="formula"><span>X + Y</span><span class="bad">&gt;</span><span>Z</span><span class="ok">→ exposed</span></div>
+        <p class="sub" style="font-size:15px">X = data shelf-life (cert windows → path signals → class defaults, capped at 30y and disclosed). Y = migration time. Z = years until CRQC. Shelf-life + migration vs. the horizon, per artefact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 NUMBERS -->
+  <section class="slide">
+    <div class="k">Verified on real code</div>
+    <h2>It works at <span class="it">estate scale.</span></h2>
+    <div class="grid4">
+      <div class="stat"><b class="g">101</b><span>artefacts · demo bank estate · 34 files · sub-second</span></div>
+      <div class="stat"><b class="b">2,597</b><span>artefacts across paramiko + pyca/cryptography + pyjwt · 6.8s</span></div>
+      <div class="stat"><b class="a">112</b><span>algorithms in KB · 89 aliases · cipher-suite decomposition</span></div>
+      <div class="stat"><b class="r">10</b><span>Mosca violations in demo · 1,443 engineer-days planned</span></div>
+    </div>
+    <p class="sub mono" style="font-size:13px">27 critical · 23 high · 11 medium · 36 low · 4 info &nbsp;—&nbsp; every finding with file:line evidence</p>
+  </section>
+
+  <!-- 7 SIMULATOR -->
+  <section class="slide">
+    <div class="k">Mosca simulator — the honest chart</div>
+    <h2>Nobody knows the CRQC year. <span class="it">So show the curve.</span></h2>
+    <div class="cols">
+      <div class="card">
+        <svg viewBox="0 0 620 190" style="width:100%;display:block" role="img" aria-label="violations vs CRQC year">
+          <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f26d6d" stop-opacity=".45"/><stop offset="1" stop-color="#f26d6d" stop-opacity="0"/>
+          </linearGradient></defs>
+          <path d="M40,20 C160,30 220,60 320,105 C420,150 500,160 590,165 L590,175 L40,175 Z" fill="url(#ag)"/>
+          <path d="M40,20 C160,30 220,60 320,105 C420,150 500,160 590,165" fill="none" stroke="#f26d6d" stroke-width="2.5"/>
+          <circle cx="40" cy="20" r="4.5" fill="#f26d6d"/><circle cx="320" cy="105" r="4.5" fill="#f5b544"/><circle cx="590" cy="165" r="4.5" fill="#3ddc84"/>
+          <text x="40" y="188" fill="#5d6f81" font-size="11" font-family="monospace">2028</text>
+          <text x="300" y="188" fill="#5d6f81" font-size="11" font-family="monospace">2038</text>
+          <text x="555" y="188" fill="#5d6f81" font-size="11" font-family="monospace">2050</text>
+          <text x="48" y="24" fill="#93a3b4" font-size="11" font-family="monospace">early CRQC → many exposed</text>
+          <text x="430" y="150" fill="#93a3b4" font-size="11" font-family="monospace">late CRQC → few exposed</text>
+        </svg>
+      </div>
+      <p class="sub">Move CRQC year, shelf-life, migration time and headcount; findings flip instantly. Presets: CNSA 2033, Aggressive 2030, Median 2035, Long-lived. The shape of the curve is the deliverable — never a single point estimate presented as fact.</p>
+    </div>
+  </section>
+
+  <!-- 8 ROADMAP -->
+  <section class="slide">
+    <div class="k">Roadmap — dependency order beats severity order</div>
+    <h2>Migrate in the order <span class="it">physics demands.</span></h2>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="wave"><span class="w">W1</span><span>Kill classically-broken <span class="t">— MD5, SHA-1, RC4… exploitable today</span></span><span class="e">first</span></div>
+      <div class="wave"><span class="w">W2</span><span>Providers <span class="t">— libraries, binaries, images must support PQC first</span></span><span class="e">unblocks all</span></div>
+      <div class="wave"><span class="w">W3</span><span>Protocol floors <span class="t">— TLS versions, configs, endpoints</span></span><span class="e">—</span></div>
+      <div class="wave"><span class="w">W4–W5</span><span>Key agreement → signatures &amp; certs <span class="t">— the Shor surface, HNDL-first</span></span><span class="e">bulk</span></div>
+      <div class="wave"><span class="w">W6–W7</span><span>Vendor-gated + symmetric hardening <span class="t">— HSM/cloud, then AES-128 → 256</span></span><span class="e">last</span></div>
+    </div>
+  </section>
+
+  <!-- 9 PROOF -->
+  <section class="slide">
+    <div class="k">Measured, not assumed</div>
+    <h2>Hybrid PQC is already <span class="it">on the wire.</span></h2>
+    <div class="term"><span class="d">$</span> atlas probe cloudflare.com<br>negotiated <span class="g">TLSv1.3 · X25519MLKEM768</span> <span class="d">— real hybrid key exchange</span><br>certificate <span class="y">ECDSA P-256</span> <span class="d">— classical authentication</span><br><br><span class="c">→ confidentiality: protected · authentication: not · that distinction is the migration argument</span></div>
+  </section>
+
+  <!-- 10 OUTPUTS -->
+  <section class="slide">
+    <div class="k">Outputs — spec-correct, CI-ready</div>
+    <h2>Standards out, <span class="it">gates shut.</span></h2>
+    <div class="grid4">
+      <div class="card"><span class="n">CycloneDX 1.6</span><h3>CBOM</h3><p>cryptoProperties, OIDs, occurrence evidence with file + line. Schema-validated in tests.</p></div>
+      <div class="card"><span class="n">SARIF 2.1.0</span><h3>Code scanning</h3><p>GitHub picks findings up automatically; severity-mapped rules with fingerprints.</p></div>
+      <div class="card"><span class="n">Markdown</span><h3>Human report</h3><p>Executive summary, Mosca block, per-wave plan, top-25 act-now findings.</p></div>
+      <div class="card"><span class="n">Exit codes</span><h3>CI gate</h3><p><span class="mono" style="font-size:12.5px">--fail-on high --max-mosca 0</span> — non-zero on breach. Verified both directions.</p></div>
+    </div>
+  </section>
+
+  <!-- 11 CONSOLE -->
+  <section class="slide">
+    <div class="k">The console — seven views, one question each</div>
+    <h2>Click through to <span class="it">the evidence.</span></h2>
+    <div class="grid4">
+      <div class="card"><span class="n">01 Discovery</span><p>Pick targets, watch findings stream with file paths.</p></div>
+      <div class="card"><span class="n">02 Overview</span><p>KPIs, severity + impact, criticality × impact heatmap.</p></div>
+      <div class="card"><span class="n">03 Inventory</span><p>Every artefact, faceted, with an evidence drawer.</p></div>
+      <div class="card"><span class="n">04 Simulator</span><p>Sliders + presets, violations curve, top risks.</p></div>
+      <div class="card"><span class="n">05 Roadmap</span><p>Waves with a year axis against the CRQC horizon.</p></div>
+      <div class="card"><span class="n">06 Live probe</span><p>Real handshakes against real hosts.</p></div>
+      <div class="card"><span class="n">07 Knowledge</span><p>112 algorithms + a cipher-suite resolver.</p></div>
+      <div class="card"><span class="n">Bonus</span><p>Compliance (NIST IR 8547, CNSA 2.0, SP 800-131A) and per-service ownership in the API.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 CLOSE -->
+  <section class="slide">
+    <div class="k">Status &amp; next</div>
+    <h2>Working prototype. <span class="it">Local analyst tool.</span></h2>
+    <div class="grid2">
+      <div class="card"><span class="n">Done</span><p>Discovery → risk → simulation → waves → CBOM/SARIF/report → CI gate → console. 200+ backend tests, clean typecheck, 244&nbsp;kB production bundle. Live at <span class="mono">localhost:8000</span>.</p></div>
+      <div class="card"><span class="n">Next</span><p>Authentication + path allow-listing before any network exposure; wire the Services view and compliance/advisor tabs into the console; broaden scanner recall on real repos.</p></div>
+    </div>
+    <p class="sub mono" style="font-size:13px">.venv/bin/python backend/atlas_cli.py scan corpus/estate &nbsp;·&nbsp; http://localhost:8000</p>
+  </section>
+
+</div>
+
+<div id="over"><div class="k" style="margin-bottom:16px">Overview — press Esc to return</div><div class="ogrid" id="ogrid"></div></div>
+
+<div id="hud">
+  <div>Quantum Atlas · SIH 26164 <span id="cnt">1 / 12</span></div>
+  <div class="keys">← → navigate <span>Esc</span> overview <span>click dots</span> jump</div>
+</div>
+<div id="dots"></div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll(".slide")),
+      dots=document.getElementById("dots"),
+      prog=document.getElementById("prog"),
+      cnt=document.getElementById("cnt"),
+      over=document.getElementById("over"),
+      ogrid=document.getElementById("ogrid"),
+      i=0;
+  var titles=["Title","Problem","Not a grepper","Discovery","Risk model","Numbers","Simulator","Roadmap","Wire proof","Outputs","Console","Status & next"];
+  slides.forEach(function(s,k){
+    var d=document.createElement("i");d.title=titles[k];
+    d.onclick=function(e){e.stopPropagation();go(k)};dots.appendChild(d);
+    var c=document.createElement("div");c.className="ocell";
+    c.innerHTML="<b>"+(k+1)+". "+titles[k]+"</b>"+s.querySelector("h1,h2").textContent.slice(0,80);
+    c.onclick=function(){go(k);over.classList.remove("open")};ogrid.appendChild(c);
+  });
+  function paint(){
+    slides.forEach(function(s,k){s.classList.toggle("active",k===i)});
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===i)});
+    prog.style.width=((i+1)/slides.length*100)+"%";
+    cnt.textContent=(i+1)+" / "+slides.length;
+    slides[i].querySelectorAll(".bar i").forEach(function(b){
+      b.style.width="0";requestAnimationFrame(function(){requestAnimationFrame(function(){b.style.width=b.dataset.w+"%"})});
+    });
+  }
+  function go(k){i=Math.max(0,Math.min(slides.length-1,k));paint()}
+  window.go=go;
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){over.classList.toggle("open");return}
+    if(over.classList.contains("open"))return;
+    if(e.key==="ArrowRight"||e.key===" "||e.key==="PageDown")go(i+1);
+    if(e.key==="ArrowLeft"||e.key==="PageUp")go(i-1);
+    if(e.key==="Home")go(0);if(e.key==="End")go(slides.length-1);
+  });
+  var tx=null;
+  document.addEventListener("touchstart",function(e){tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener("touchend",function(e){
+    if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>60)go(i+(dx<0?1:-1));tx=null;
+  },{passive:true});
+  document.getElementById("deck").addEventListener("click",function(e){
+    if(e.target.closest("a"))return;
+    if(e.clientX>window.innerWidth*0.75)go(i+1);
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

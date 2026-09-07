@@ -1,0 +1,16 @@
+[ req ]
+default_bits        = 2048
+default_md          = sha256
+distinguished_name  = req_distinguished_name
+
+[ req_distinguished_name ]
+countryName         = IN
+organizationName    = Meridian Financial Services
+
+[ legacy_partner ]
+default_bits        = 1024
+default_md          = sha1
+
+[ system_default_sect ]
+MinProtocol = TLSv1
+CipherString = DEFAULT@SECLEVEL=1

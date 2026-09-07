@@ -1,0 +1,78 @@
+name: Publish to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: The run of wheel-builder to use for finding artifacts.
+        required: true
+      environment:
+        description: Which PyPI environment to upload to
+        required: true
+        type: choice
+        options: ["testpypi", "pypi"]
+  workflow_run:
+    workflows: ["Wheel Builder"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # We're not actually verifying that the triggering push event was for a
+    # tag, because github doesn't expose enough information to do so.
+    # wheel-builder.yml currently only has push events for tags.
+    # The repository_owner check keeps forks from attempting a publish (or
+    # requesting OIDC tokens/attestations) if a tag is ever pushed to one.
+    if: github.repository_owner == 'pyca' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success'))
+    permissions:
+      id-token: "write"
+      attestations: "write"
+    steps:
+      - run: echo "$EVENT_CONTEXT"
+        env:
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+
+      - run: |
+          echo "PYPI_URL=https://upload.pypi.org/legacy/" >> $GITHUB_ENV
+        if: github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'pypi')
+      - run: |
+          echo "PYPI_URL=https://test.pypi.org/legacy/" >> $GITHUB_ENV
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'testpypi'
+
+      - name: Setup python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+        timeout-minutes: 3
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: ci-constraints-requirements.txt
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - run: python -m pip install -c ci-constraints-requirements.txt 'uv'
+
+      - uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
+        with:
+          path: tmpdist/
+          run_id: ${{ github.event.inputs.run_id || github.event.workflow_run.id }}
+      - run: mkdir dist/
+      - run: |
+          find tmpdist/ -type f -name 'cryptography*' -exec mv {} dist/ \;
+
+      - uses: astral-sh/attest-action@f589a42a7efb6fe400b4f400de60b4bc90390027 # v0.0.6
+        # Do not perform attestation for things for TestPyPI. This is
+        # because there's nothing that would prevent a malicious PyPI from
+        # serving a signed TestPyPI asset in place of a release intended for
+        # PyPI.
+        if: env.PYPI_URL == 'https://upload.pypi.org/legacy/'
+
+      - name: Publish package distributions to PyPI
+        run: |
+          uv publish --trusted-publishing=always dist/*
+        env:
+          UV_PUBLISH_URL: ${{ env.PYPI_URL }}

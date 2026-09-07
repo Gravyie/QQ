@@ -1,0 +1,62 @@
+name: Bump x509-limbo and/or wycheproof
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run daily
+    - cron: "0 10 * * *"
+
+jobs:
+  bump:
+    if: github.repository_owner == 'pyca'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Needed so we can push back to the repo
+          persist-credentials: true
+      - id: bump-x509-limbo
+        run: |
+          python3 .github/bin/bump_dependency.py \
+            --name "x509-limbo" \
+            --repo-url "https://github.com/C2SP/x509-limbo" \
+            --branch "main" \
+            --file-path ".github/actions/fetch-vectors/action.yml" \
+            --current-version-pattern 'X509_LIMBO_REF: "([a-f0-9]{40})" # x509-limbo-ref' \
+            --update-pattern 'X509_LIMBO_REF: "{new_version}" # x509-limbo-ref' \
+            --comment-pattern 'Latest commit on the x509-limbo main branch.*?\.'
+      - id: bump-wycheproof
+        run: |
+          python3 .github/bin/bump_dependency.py \
+            --name "wycheproof" \
+            --repo-url "https://github.com/C2SP/wycheproof" \
+            --branch "main" \
+            --file-path ".github/actions/fetch-vectors/action.yml" \
+            --current-version-pattern 'WYCHEPROOF_REF: "([a-f0-9]{40})" # wycheproof-ref' \
+            --update-pattern 'WYCHEPROOF_REF: "{new_version}" # wycheproof-ref' \
+            --comment-pattern 'Latest commit on the wycheproof main branch.*?\.'
+      - name: Check for updates
+        run: git status
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: generate-token
+        with:
+          app-id: ${{ secrets.BORINGBOT_APP_ID }}
+          private-key: ${{ secrets.BORINGBOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-workflows: write
+        if: steps.bump-x509-limbo.outputs.HAS_UPDATES == 'true' || steps.bump-wycheproof.outputs.HAS_UPDATES == 'true'
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: "bump-vectors"
+          commit-message: "Bump x509-limbo and/or wycheproof in CI"
+          title: "Bump x509-limbo and/or wycheproof in CI"
+          author: "pyca-boringbot[bot] <pyca-boringbot[bot]+106132319@users.noreply.github.com>"
+          body: |
+            ${{ steps.bump-x509-limbo.outputs.COMMIT_MSG }}
+            ${{ steps.bump-wycheproof.outputs.COMMIT_MSG }}
+          token: ${{ steps.generate-token.outputs.token }}
+        if: steps.bump-x509-limbo.outputs.HAS_UPDATES == 'true' || steps.bump-wycheproof.outputs.HAS_UPDATES == 'true'

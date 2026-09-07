@@ -1,0 +1,22 @@
+[build-system]
+# These requirements must be kept sync with the requirements in
+# ./.github/requirements/build-requirements.{in,txt}
+requires = ["uv_build>=0.7.19,<0.13.0"]
+build-backend = "uv_build"
+
+[project]
+name = "cryptography_vectors"
+version = "51.0.0-dev1"
+authors = [
+    {name = "The Python Cryptographic Authority and individual contributors", email = "cryptography-dev@python.org"}
+]
+description = "Test vectors for the cryptography package."
+readme = "README.rst"
+license = {text = "Apache-2.0 OR BSD-3-Clause"}
+
+[project.urls]
+homepage = "https://github.com/pyca/cryptography"
+
+[tool.uv.build-backend]
+module-root = ""
+source-include = ["LICENSE", "LICENSE.APACHE", "LICENSE.BSD"]

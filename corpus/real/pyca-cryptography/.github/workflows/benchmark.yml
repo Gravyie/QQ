@@ -1,0 +1,70 @@
+name: Benchmark
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/benchmark.yml"
+      - "src/**"
+      - "tests/**"
+  workflow_dispatch:
+    inputs:
+      base_commit:
+        description: The base commit to compare against
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  # See RUST_LOG in ci.yml
+  RUST_LOG: uv=debug,uv_client::cached_client=warn,uv_client::registry_client=error,uv_resolver::resolver=warn
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        timeout-minutes: 3
+        with:
+          persist-credentials: false
+          path: "cryptography-pr"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        timeout-minutes: 3
+        with:
+          persist-credentials: false
+          repository: "pyca/cryptography"
+          path: "cryptography-base"
+          ref: "${{ github.event.inputs.base_commit || github.base_ref }}"
+      - name: Clone test vectors
+        timeout-minutes: 2
+        uses: ./cryptography-base/.github/actions/fetch-vectors
+
+      - name: Setup python
+        id: setup-python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: pip install -c ./cryptography-pr/ci-constraints-requirements.txt uv
+      - name: Create virtualenv (base)
+        run: |
+          uv venv .venv-base
+          . .venv-base/bin/activate
+          uv pip install -v -c ./cryptography-base/ci-constraints-requirements.txt ./cryptography-base ./cryptography-base/vectors/ --group ./cryptography-base/pyproject.toml:test
+      - name: Create virtualenv (PR)
+        run: |
+          uv venv .venv-pr
+          . .venv-pr/bin/activate
+          uv pip install -v -c ./cryptography-pr/ci-constraints-requirements.txt ./cryptography-pr ./cryptography-pr/vectors/ --group ./cryptography-pr/pyproject.toml:test
+
+      - name: Run benchmarks (base)
+        run: .venv-base/bin/pytest --benchmark-enable --benchmark-only ./cryptography-pr/tests/bench/ --benchmark-json=bench-base.json --x509-limbo-root=x509-limbo/
+      - name: Run benchmarks (PR)
+        run: .venv-pr/bin/pytest --benchmark-enable --benchmark-only ./cryptography-pr/tests/bench/ --benchmark-json=bench-pr.json --x509-limbo-root=x509-limbo/
+
+      - name: Compare results
+        run: python ./cryptography-pr/.github/bin/compare_benchmarks.py bench-base.json bench-pr.json | tee -a $GITHUB_STEP_SUMMARY

@@ -1,0 +1,89 @@
+name: Wheel Smoketest
+description: Tests a built cryptography wheel by installing it and verifying basic functionality
+
+inputs:
+  python-path:
+    description: "Optional path to a specific Python interpreter to use for creating the venv"
+    required: false
+    default: ""
+  build-requirements-path:
+    description: "Path to the build requirements file"
+    required: true
+  test-pip:
+    description: "Optional flag to also test installation with pip"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Create virtual environment
+      run: |
+        if [ -n "${PYTHON_PATH}" ]; then
+          uv venv --python="${PYTHON_PATH}"
+        else
+          uv venv
+        fi
+      env:
+        PYTHON_PATH: ${{ inputs.python-path }}
+      shell: bash
+
+    - name: Install build requirements
+      run: uv pip install --require-hashes -r "${BUILD_REQUIREMENTS_PATH}"
+      env:
+        BUILD_REQUIREMENTS_PATH: ${{ inputs.build-requirements-path }}
+      shell: bash
+
+    - name: Install cryptography wheel
+      run: uv pip install cryptography --no-index -f wheelhouse/
+      shell: bash
+
+    - name: Show the wheel's minimum macOS SDK and architectures
+      if: runner.os == 'macOS'
+      run: |
+        find .venv/lib/*/site-packages/cryptography/hazmat/bindings -name '*.so' -exec vtool -show {} \;
+      shell: bash
+
+    - name: Verify cryptography installation and OpenSSL version
+      run: |
+        uv run - <<'EOF'
+        from cryptography.hazmat.backends.openssl.backend import backend
+        print(f"Loaded: {backend.openssl_version_text()}")
+        print(f"Linked Against: {backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii')}")
+        EOF
+      shell: bash
+
+    - name: Create virtual environment for pip testing
+      if: inputs.test-pip == 'true'
+      run: |
+        if [ -n "${PYTHON_PATH}" ]; then
+          "${PYTHON_PATH}" -m venv .venv-pip-test
+        else
+          python3 -m venv .venv-pip-test
+        fi
+      env:
+        PYTHON_PATH: ${{ inputs.python-path }}
+      shell: bash
+
+    - name: Install build requirements with pip
+      if: inputs.test-pip == 'true'
+      run: .venv-pip-test/bin/pip install --require-hashes -r "${BUILD_REQUIREMENTS_PATH}"
+      env:
+        BUILD_REQUIREMENTS_PATH: ${{ inputs.build-requirements-path }}
+      shell: bash
+
+    - name: Install cryptography wheel with pip
+      if: inputs.test-pip == 'true'
+      run: .venv-pip-test/bin/pip install cryptography --no-index -f wheelhouse/
+      shell: bash
+
+    - name: Verify pip installation and OpenSSL version
+      if: inputs.test-pip == 'true'
+      run: |
+        .venv-pip-test/bin/python - <<'EOF'
+        from cryptography.hazmat.backends.openssl.backend import backend
+        print(f"pip install - Loaded: {backend.openssl_version_text()}")
+        print(f"pip install - Linked Against: {backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii')}")
+        EOF
+      shell: bash

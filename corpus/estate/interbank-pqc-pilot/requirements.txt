@@ -1,0 +1,3 @@
+# interbank PQC pilot
+liboqs-python==0.10.0
+cryptography==44.0.0

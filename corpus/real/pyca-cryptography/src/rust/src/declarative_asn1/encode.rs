@@ -1,0 +1,441 @@
+// This file is dual licensed under the terms of the Apache License, Version
+// 2.0, and the BSD License. See the LICENSE file in the root of this repository
+// for complete details.
+
+use asn1::{SimpleAsn1Writable, Writer};
+use pyo3::types::{PyAnyMethods, PyListMethods, PyTypeMethods};
+
+use crate::declarative_asn1::types::{
+    check_size_constraint, value_set_inner_type, AnnotatedType, AnnotatedTypeObject, BitString,
+    Encoding, GeneralizedTime, IA5String, PrintableString, Type, UtcTime, Variant,
+};
+use crate::error::CryptographyError;
+
+fn write_value<T: SimpleAsn1Writable>(
+    writer: &mut Writer<'_>,
+    value: &T,
+    encoding: &Option<pyo3::Py<Encoding>>,
+) -> Result<(), T::Error> {
+    match encoding {
+        Some(e) => match e.get() {
+            Encoding::Implicit(tag) => writer.write_implicit_element(value, *tag),
+            Encoding::Explicit(tag) => writer.write_explicit_element(value, *tag),
+        },
+        None => writer.write_element(value),
+    }
+}
+
+impl asn1::Asn1Writable for AnnotatedTypeObject<'_> {
+    type Error = CryptographyError;
+    fn encoded_length(&self) -> Option<usize> {
+        None
+    }
+
+    fn write(&self, writer: &mut Writer<'_>) -> Result<(), Self::Error> {
+        let value: pyo3::Bound<'_, pyo3::PyAny> = self.value.clone();
+        let py = value.py();
+        let annotated_type = self.annotated_type;
+
+        // Handle DEFAULT annotation if value is same as default (by
+        // not encoding the value)
+        if let Some(default) = &annotated_type.annotation.get().default {
+            if value.eq(default)? {
+                return Ok(());
+            }
+        }
+
+        let annotation = &annotated_type.annotation.get();
+        let encoding = &annotation.encoding;
+        let inner = annotated_type.inner.get();
+        match &inner {
+            Type::Sequence(_cls, fields) => write_value(
+                writer,
+                &asn1::SequenceWriter::new(&|w| {
+                    for (name, ann_type) in fields.bind(py).into_iter() {
+                        let name = name.cast::<pyo3::types::PyString>()?;
+                        let ann_type = ann_type.cast::<AnnotatedType>()?;
+                        let object = AnnotatedTypeObject {
+                            annotated_type: ann_type.get(),
+                            value: self.value.getattr(name)?,
+                        };
+                        w.write_element(&object)?;
+                    }
+                    Ok(())
+                }),
+                encoding,
+            ),
+            Type::SequenceOf(cls) => {
+                let values: Vec<AnnotatedTypeObject<'_>> = value
+                    .cast::<pyo3::types::PyList>()?
+                    .iter()
+                    .map(|e| AnnotatedTypeObject {
+                        annotated_type: cls.get(),
+                        value: e,
+                    })
+                    .collect();
+
+                check_size_constraint(&annotation.size, || values.len(), "SEQUENCE OF")?;
+
+                write_value(writer, &asn1::SequenceOfWriter::new(values), encoding)
+            }
+            Type::Set(_cls, fields) => write_value(
+                writer,
+                &asn1::SetWriter::new(&|w| {
+                    for (name, ann_type) in fields.bind(py).into_iter() {
+                        let name = name.cast::<pyo3::types::PyString>()?;
+                        let ann_type = ann_type.cast::<AnnotatedType>()?;
+                        let object = AnnotatedTypeObject {
+                            annotated_type: ann_type.get(),
+                            value: self.value.getattr(name)?,
+                        };
+                        w.write_element(&object)?;
+                    }
+                    Ok(())
+                }),
+                encoding,
+            ),
+            Type::SetOf(cls) => {
+                let setof = value.cast::<super::types::SetOf>()?;
+                let values: Vec<AnnotatedTypeObject<'_>> = setof
+                    .get()
+                    .inner
+                    .bind(py)
+                    .iter()
+                    .map(|e| AnnotatedTypeObject {
+                        annotated_type: cls.get(),
+                        value: e,
+                    })
+                    .collect();
+
+                check_size_constraint(&annotation.size, || values.len(), "SET OF")?;
+
+                write_value(writer, &asn1::SetOfWriter::new(values), encoding)
+            }
+            Type::Option(cls) => {
+                if !value.is_none() {
+                    let inner_object = AnnotatedTypeObject {
+                        annotated_type: &AnnotatedType {
+                            inner: cls.get().inner.clone_ref(py),
+                            // Since for optional types the annotations are enforced to be associated with the Option
+                            // (instead of the inner type), when encoding the inner type we add the annotations of the Option
+                            annotation: annotated_type.annotation.clone_ref(py),
+                        },
+                        value,
+                    };
+                    inner_object.write(writer)
+                } else {
+                    // Missing OPTIONAL values are omitted from DER encoding
+                    Ok(())
+                }
+            }
+            Type::Choice(ts) => {
+                for t in ts.bind(py) {
+                    let variant = t.cast::<Variant>()?.get();
+
+                    if !value.is_exact_instance(variant.python_class.bind(py)) {
+                        continue;
+                    }
+
+                    // Check if this variant matches the value
+                    let matches = match &variant.tag_name {
+                        Some(expected_tag) => {
+                            let value_tag: String = value.getattr("tag")?.extract()?;
+                            &value_tag == expected_tag
+                        }
+                        None => true,
+                    };
+
+                    if matches {
+                        let val = if variant.tag_name.is_some() {
+                            value.getattr("value")?
+                        } else {
+                            value
+                        };
+                        let object = AnnotatedTypeObject {
+                            annotated_type: variant.ann_type.get(),
+                            value: val,
+                        };
+                        match encoding {
+                            Some(e) => match e.get() {
+                                // CHOICEs cannot be IMPLICIT. See X.680 section 31.2.9.
+                                Encoding::Implicit(_) => {
+                                    return Err(CryptographyError::Py(
+                                        pyo3::exceptions::PyValueError::new_err(
+                                            "CHOICE fields cannot be IMPLICIT".to_string(),
+                                        ),
+                                    ));
+                                }
+                                Encoding::Explicit(n) => {
+                                    return writer.write_explicit_element(&object, *n)
+                                }
+                            },
+                            None => return object.write(writer),
+                        }
+                    }
+                }
+                // No matching variant found
+                Err(CryptographyError::Py(
+                    pyo3::exceptions::PyValueError::new_err(
+                        "value for CHOICE field does not correspond to any of the variant types"
+                            .to_string(),
+                    ),
+                ))
+            }
+            Type::ValueSet(cls, inner_type, _) => {
+                if !value.is_instance(cls.bind(py))? {
+                    return Err(CryptographyError::Py(
+                        pyo3::exceptions::PyTypeError::new_err(format!(
+                            "value set field must be an instance of {}, got: {}",
+                            cls.bind(py).name()?,
+                            value.get_type().name()?,
+                        )),
+                    ));
+                }
+                let object = AnnotatedTypeObject {
+                    annotated_type: &value_set_inner_type(py, inner_type.get(), annotation)?,
+                    value: value.getattr(pyo3::intern!(py, "value"))?,
+                };
+                object.write(writer)
+            }
+            Type::PyBool() => {
+                let val: bool = value.extract()?;
+                Ok(write_value(writer, &val, encoding)?)
+            }
+            Type::PyInt() => {
+                let int_value = value.cast_into::<pyo3::types::PyInt>()?;
+                let bytes = crate::asn1::py_int_to_der_bytes(py, int_value)?;
+                let val = asn1::BigInt::new(&bytes).unwrap();
+                Ok(write_value(writer, &val, encoding)?)
+            }
+            Type::PyBytes() => {
+                let val: &[u8] = value.extract()?;
+                check_size_constraint(&annotation.size, || val.len(), "OCTET STRING")?;
+                Ok(write_value(writer, &val, encoding)?)
+            }
+            Type::PyStr() => {
+                let val: pyo3::pybacked::PyBackedStr = value.extract()?;
+                let asn1_string: asn1::Utf8String<'_> = asn1::Utf8String::new(&val);
+                check_size_constraint(&annotation.size, || val.chars().count(), "UTF8String")?;
+                Ok(write_value(writer, &asn1_string, encoding)?)
+            }
+            Type::PrintableString() => {
+                let val: &pyo3::Bound<'_, PrintableString> = value.cast()?;
+                // TODO: Switch this to `to_str()` once our minimum version is py310+
+                let inner_str = val.get().inner.to_cow(py)?;
+                check_size_constraint(&annotation.size, || inner_str.len(), "PrintableString")?;
+                let printable_string: asn1::PrintableString<'_> =
+                    asn1::PrintableString::new(&inner_str).ok_or(CryptographyError::Py(
+                        pyo3::exceptions::PyValueError::new_err(
+                            "invalid value for PrintableString".to_string(),
+                        ),
+                    ))?;
+
+                Ok(write_value(writer, &printable_string, encoding)?)
+            }
+            Type::IA5String() => {
+                let val: &pyo3::Bound<'_, IA5String> = value.cast()?;
+                // TODO: Switch this to `to_str()` once our minimum version is py310+
+                let inner_str = val.get().inner.to_cow(py)?;
+                check_size_constraint(&annotation.size, || inner_str.len(), "IA5String")?;
+                let ia5_string: asn1::IA5String<'_> = asn1::IA5String::new(&inner_str).ok_or(
+                    CryptographyError::Py(pyo3::exceptions::PyValueError::new_err(
+                        "invalid value for IA5String".to_string(),
+                    )),
+                )?;
+                Ok(write_value(writer, &ia5_string, encoding)?)
+            }
+            Type::ObjectIdentifier() => {
+                let val: &pyo3::Bound<'_, crate::oid::ObjectIdentifier> = value.cast()?;
+                Ok(write_value(writer, &val.get().oid, encoding)?)
+            }
+            Type::UtcTime() => {
+                let val: &pyo3::Bound<'_, UtcTime> = value.cast()?;
+                let py_datetime = val.get().inner.bind(py).clone();
+                let datetime = crate::x509::py_to_datetime(py, py_datetime)?;
+                let utc_time = asn1::UtcTime::new(datetime)?;
+                Ok(write_value(writer, &utc_time, encoding)?)
+            }
+            Type::GeneralizedTime() => {
+                let val: &pyo3::Bound<'_, GeneralizedTime> = value.cast()?;
+                let py_datetime = val.get().inner.bind(py).clone();
+                let (datetime, microseconds) =
+                    crate::x509::py_to_datetime_with_microseconds(py, py_datetime)?;
+                let nanoseconds = microseconds.map(|m| m * 1000);
+                let generalized_time = asn1::GeneralizedTime::new(datetime, nanoseconds)?;
+                Ok(write_value(writer, &generalized_time, encoding)?)
+            }
+            Type::BitString() => {
+                let val: &pyo3::Bound<'_, BitString> = value.cast()?;
+                let bitstring: asn1::BitString<'_> =
+                    asn1::BitString::new(val.get().data.as_bytes(py), val.get().padding_bits)
+                        .ok_or(CryptographyError::Py(
+                            pyo3::exceptions::PyValueError::new_err(
+                                "invalid value for BitString".to_string(),
+                            ),
+                        ))?;
+                let n_bits = bitstring.as_bytes().len() * 8 - usize::from(bitstring.padding_bits());
+                check_size_constraint(&annotation.size, || n_bits, "BIT STRING")?;
+                Ok(write_value(writer, &bitstring, encoding)?)
+            }
+            Type::Tlv() => {
+                let tlv = value.cast::<super::types::Tlv>()?;
+                // The `Tlv` Python object stores the element's raw DER bytes
+                // (`full_data`) rather than a live `asn1::Tlv<'_>`, since the
+                // latter borrows its input and can't be held in a pyclass. To
+                // emit it we need an `asn1::Asn1Writable`, but `asn1::Tlv` has
+                // no public constructor, so we recover one by re-parsing
+                // `full_data`. This only reads the tag/length header (no
+                // allocation, no re-validation of the value) and is infallible
+                // in practice, since the bytes came from a successful decode.
+                let asn1_tlv =
+                    asn1::parse_single::<asn1::Tlv<'_>>(tlv.get().full_data.as_bytes(py))?;
+                match encoding {
+                    Some(e) => match e.get() {
+                        // TLVs with implicit annotations are not supported
+                        // (they are caught first at the Python level).
+                        Encoding::Implicit(_) => Err(CryptographyError::Py(
+                            pyo3::exceptions::PyValueError::new_err(
+                                "invalid type definition: TLV/ANY fields cannot \
+                                 be implicitly encoded",
+                            ),
+                        )),
+                        Encoding::Explicit(n) => Ok(writer.write_explicit_element(&asn1_tlv, *n)?),
+                    },
+                    None => Ok(writer.write_element(&asn1_tlv)?),
+                }
+            }
+            Type::Null() => Ok(write_value(writer, &(), encoding)?),
+            Type::Certificate() => {
+                let val = value.cast::<crate::x509::certificate::Certificate>()?;
+                Ok(write_value(
+                    writer,
+                    val.get().raw.borrow_dependent(),
+                    encoding,
+                )?)
+            }
+            Type::CertificateSigningRequest() => {
+                let val = value.cast::<crate::x509::csr::CertificateSigningRequest>()?;
+                Ok(write_value(
+                    writer,
+                    val.get().raw.borrow_dependent(),
+                    encoding,
+                )?)
+            }
+            Type::CertificateRevocationList() => {
+                let val = value.cast::<crate::x509::crl::CertificateRevocationList>()?;
+                Ok(write_value(
+                    writer,
+                    val.get().owned.borrow_dependent(),
+                    encoding,
+                )?)
+            }
+            Type::Name() => {
+                if !value.is_instance(&crate::types::NAME.get(py)?)? {
+                    return Err(CryptographyError::Py(
+                        pyo3::exceptions::PyTypeError::new_err(format!(
+                            "Name field must be an instance of x509.Name, got: {}",
+                            value.get_type().name()?,
+                        )),
+                    ));
+                }
+                let ka = cryptography_keepalive::KeepAlive::new();
+                let name = crate::x509::common::encode_name(py, &ka, &value)?;
+                Ok(write_value(writer, &name, encoding)?)
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use asn1::Asn1Writable;
+    use pyo3::PyTypeInfo;
+
+    use crate::declarative_asn1::types::{
+        AnnotatedType, AnnotatedTypeObject, Annotation, Encoding, Tlv, Type, Variant,
+    };
+
+    #[test]
+    // Needed for coverage of the `Encoding::Implicit` arm of the
+    // `Type::Tlv()` encoding case, since implicit TLV annotations are
+    // rejected first at the Python level and so never reach it.
+    fn test_encode_implicit_tlv() {
+        pyo3::Python::initialize();
+        pyo3::Python::attach(|py| {
+            // The DER encoding of the INTEGER `1`.
+            let full_data = pyo3::types::PyBytes::new(py, b"\x02\x01\x01").unbind();
+            let tag_bytes = pyo3::types::PyBytes::new(py, b"\x02").unbind();
+            let tlv = pyo3::Py::new(
+                py,
+                Tlv {
+                    tag_bytes,
+                    data_index: 2,
+                    full_data,
+                },
+            )
+            .unwrap();
+
+            let annotation = Annotation {
+                default: None,
+                encoding: Some(pyo3::Py::new(py, Encoding::Implicit(0)).unwrap()),
+                size: None,
+            };
+            let ann_type = AnnotatedType {
+                inner: pyo3::Py::new(py, Type::Tlv()).unwrap(),
+                annotation: pyo3::Py::new(py, annotation).unwrap(),
+            };
+            let object = AnnotatedTypeObject {
+                annotated_type: &ann_type,
+                value: tlv.bind(py).clone().into_any(),
+            };
+
+            let result = asn1::write(|writer| object.write(writer));
+            assert!(result.is_err());
+            let error = result.unwrap_err();
+            assert!(format!("{error}")
+                .contains("invalid type definition: TLV/ANY fields cannot be implicitly encoded"));
+        });
+    }
+
+    #[test]
+    fn test_encode_implicit_choice() {
+        pyo3::Python::initialize();
+        pyo3::Python::attach(|py| {
+            let annotation = Annotation {
+                default: None,
+                encoding: None,
+                size: None,
+            };
+            let ann_type_variant = AnnotatedType {
+                inner: pyo3::Py::new(py, Type::PyInt()).unwrap(),
+                annotation: pyo3::Py::new(py, annotation).unwrap(),
+            };
+            let variant = Variant {
+                python_class: pyo3::types::PyInt::type_object(py).unbind(),
+                ann_type: pyo3::Py::new(py, ann_type_variant).unwrap(),
+                tag_name: None,
+            };
+
+            let variants = vec![variant];
+            let choice = Type::Choice(pyo3::types::PyList::new(py, variants).unwrap().unbind());
+            let annotation = Annotation {
+                default: None,
+                encoding: Some(pyo3::Py::new(py, Encoding::Implicit(0)).unwrap()),
+                size: None,
+            };
+            let ann_type = AnnotatedType {
+                inner: pyo3::Py::new(py, choice).unwrap(),
+                annotation: pyo3::Py::new(py, annotation).unwrap(),
+            };
+
+            let value = pyo3::types::PyInt::new(py, 3).into_any();
+            let object = AnnotatedTypeObject {
+                annotated_type: &ann_type,
+                value,
+            };
+
+            let result = asn1::write(|writer| object.write(writer));
+            assert!(result.is_err());
+        });
+    }
+}
