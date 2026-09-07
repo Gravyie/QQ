@@ -1,0 +1,2448 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:6640918b-a344-49ac-8623-6ab11c7a5535",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-07T10:45:09Z",
+    "lifecycles": [
+      {
+        "phase": "operations"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "Quantum Atlas",
+          "version": "1.0.0",
+          "description": "Enterprise Cryptographic Discovery & Analysis Tool (ECDAT)"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "atlas-scan-6640918b-a344-49ac-8623-6ab11c7a5535",
+      "name": "Enterprise",
+      "description": "Cryptographic estate scanned by Quantum Atlas"
+    },
+    "properties": [
+      {
+        "name": "atlas:crqc-year",
+        "value": "2033"
+      },
+      {
+        "name": "atlas:mosca-violations",
+        "value": "1"
+      },
+      {
+        "name": "atlas:quantum-vulnerable-pct",
+        "value": "40.0"
+      },
+      {
+        "name": "atlas:files-scanned",
+        "value": "6"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-4d3b660c19e7",
+      "name": "SHA-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "classicalSecurityLevel": 63,
+          "cryptoFunctions": [
+            "digest"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "1.3.14.3.2.26"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+            "line": 15,
+            "additionalContext": "digest = hashlib.sha1(batch).digest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "SHA-384"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-25c1f5e7499f",
+      "name": "SHA-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "classicalSecurityLevel": 63,
+          "cryptoFunctions": [
+            "digest"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "1.3.14.3.2.26"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+            "line": 16,
+            "additionalContext": "return rsa_key.sign(digest, padding.PKCS1v15(), utils.Prehashed(hashes.SHA1()))"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "SHA-384"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-0692f5ae7f83",
+      "name": "PBKDF2",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "kdf",
+          "classicalSecurityLevel": 128,
+          "cryptoFunctions": [
+            "keyderive"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "1.2.840.113549.1.5.12"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 14,
+            "additionalContext": "from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "classical_ok"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "Argon2"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-d1dbab484a13",
+      "name": "AES",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "classicalSecurityLevel": 128,
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "2.16.840.1.101.3.4.1"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 33,
+            "additionalContext": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "grover"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "4.2"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2038"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "AES-256"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-382e394df089",
+      "name": "AES-CBC",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "classicalSecurityLevel": 128,
+          "mode": "cbc",
+          "cryptoFunctions": [
+            "encrypt",
+            "decrypt"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "2.16.840.1.101.3.4.1"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 33,
+            "additionalContext": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "grover"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "4.7"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2038"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "AES-256"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-25a774f8bb27",
+      "name": "PBKDF2",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "kdf",
+          "classicalSecurityLevel": 128,
+          "cryptoFunctions": [
+            "keyderive"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "1.2.840.113549.1.5.12"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 40,
+            "additionalContext": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "classical_ok"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "Argon2"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-163889901623",
+      "name": "HMAC",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "mac",
+          "classicalSecurityLevel": 128,
+          "cryptoFunctions": [
+            "tag"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 40,
+            "additionalContext": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "classical_ok"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "HMAC"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-ae830f5129d1",
+      "name": "HMAC",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "mac",
+          "classicalSecurityLevel": 128,
+          "cryptoFunctions": [
+            "tag"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 45,
+            "additionalContext": "return hmac.new(key, payload, hashlib.sha256).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "classical_ok"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "HMAC"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-0118ce0a8c28",
+      "name": "MD5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "classicalSecurityLevel": 18,
+          "cryptoFunctions": [
+            "digest"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "1.2.840.113549.2.5"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 50,
+            "additionalContext": "return hashlib.md5(serial.encode()).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "3.33"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "8"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "SHA-384"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-c06a1659a385",
+      "name": "RSA private key",
+      "cryptoProperties": {
+        "assetType": "related-crypto-material",
+        "relatedCryptoMaterialProperties": {
+          "type": "private-key",
+          "state": "active",
+          "format": "PEM"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/secrets/jwt-signing.key",
+            "line": 1,
+            "additionalContext": "-----BEGIN RSA PRIVATE KEY-----"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "10.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "key"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "key-store"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "true"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "-1.75"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "8"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "9"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.95"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ecdat-b68dcab07531",
+      "name": "cryptography",
+      "version": "41.0.7",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 2,
+            "additionalContext": "cryptography==41.0.7"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "library"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "library-manifest"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.67"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "4"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ecdat-eca64c5d1624",
+      "name": "pyjwt",
+      "version": "2.8.0",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 3,
+            "additionalContext": "pyjwt==2.8.0"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "library"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "library-manifest"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.67"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "4"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ecdat-ef53323668fb",
+      "name": "pyopenssl",
+      "version": "23.3.0",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 8,
+            "additionalContext": "pyopenssl==23.3.0"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "library"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "library-manifest"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.67"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "4"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "platform",
+      "bom-ref": "ecdat-b1e59c1e1ca6",
+      "name": "RSA",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 4,
+            "additionalContext": "customer_master_key_spec = \"RSA_4096\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "cloud-service"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "0.83"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "14"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-KEM-768"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "platform",
+      "bom-ref": "ecdat-b2fa4d2735eb",
+      "name": "ECDSA-P256",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 11,
+            "additionalContext": "customer_master_key_spec = \"ECC_NIST_P256\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "cloud-service"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "-1.17"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "7"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "14"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "ML-DSA-65+ECDSA-P256"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-a44682050d17",
+      "name": "TLSv1.1",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.1"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 22,
+            "additionalContext": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-55e7f605b2d3",
+      "name": "TLSv1.2",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 22,
+            "additionalContext": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-13235a4c3f43",
+      "name": "TLSv1.0",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.0"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 17,
+            "additionalContext": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-6ea745b01bee",
+      "name": "TLSv1.1",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.1"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 17,
+            "additionalContext": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "broken_classically"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "9.0"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-ce3b64b04242",
+      "name": "TLSv1.2",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 17,
+            "additionalContext": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-1ebb6e47cd01",
+      "name": "ECDH",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "cipherSuites": [
+            {
+              "name": "ECDHE-RSA-AES128-SHA256"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 18,
+            "additionalContext": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-KEM-768"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-b2f61e4e91b0",
+      "name": "DH",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "cipherSuites": [
+            {
+              "name": "DHE-RSA-AES128-SHA"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 18,
+            "additionalContext": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-KEM-768"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-77b256df8fc7",
+      "name": "AES-128",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "cipherSuites": [
+            {
+              "name": "AES128-SHA"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 18,
+            "additionalContext": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "grover"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "4.4"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2038"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "AES-256"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-b668a8bd04fc",
+      "name": "3DES",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "cipherSuites": [
+            {
+              "name": "DES-CBC3-SHA"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 18,
+            "additionalContext": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "grover"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "4.4"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2038"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "AES-256"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-1a5b90ebc93b",
+      "name": "TLSv1.2",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.2"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 31,
+            "additionalContext": "ssl_protocols TLSv1.2 TLSv1.3;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "TLSv1.3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-c62dcfd00d24",
+      "name": "TLSv1.3",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "tls",
+          "version": "1.3"
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 31,
+            "additionalContext": "ssl_protocols TLSv1.2 TLSv1.3;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "X25519MLKEM768"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "low"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-20dbc833da5a",
+      "name": "ECDH",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "protocolProperties": {
+          "type": "other",
+          "cipherSuites": [
+            {
+              "name": "ECDHE-ECDSA-AES256-GCM-SHA384"
+            }
+          ]
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 32,
+            "additionalContext": "ssl_ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "shor_broken"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "high"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "7.9"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "protocol"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "configuration"
+        },
+        {
+          "name": "atlas:quantum-year",
+          "value": "2033"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "6"
+        },
+        {
+          "name": "atlas:hndl-exposure",
+          "value": "0.6"
+        },
+        {
+          "name": "atlas:recommended-target",
+          "value": "ML-KEM-768"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:recommended-hybrid",
+          "value": "X25519MLKEM768"
+        }
+      ]
+    },
+    {
+      "type": "platform",
+      "bom-ref": "ecdat-d590c7fdd803",
+      "name": "AWS KMS (Terraform)",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 2,
+            "additionalContext": "resource \"aws_kms_key\" \"pan_master\" {"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "cloud-service"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "0.83"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "14"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        }
+      ]
+    },
+    {
+      "type": "platform",
+      "bom-ref": "ecdat-c8c5a9cf2f01",
+      "name": "AWS KMS (Terraform)",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 9,
+            "additionalContext": "resource \"aws_kms_key\" \"settlement_signing\" {"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "cloud-service"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "0.83"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "14"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        }
+      ]
+    },
+    {
+      "type": "device",
+      "bom-ref": "ecdat-b1cef5e74edf",
+      "name": "AWS CloudHSM",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 15,
+            "additionalContext": "resource \"aws_cloudhsm_v2_cluster\" \"branch_hsm\" {"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.5"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "critical"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "hardware"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "0.5"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "18"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "high"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "atlas-scan-6640918b-a344-49ac-8623-6ab11c7a5535",
+      "dependsOn": [
+        "ecdat-4d3b660c19e7",
+        "ecdat-25c1f5e7499f",
+        "ecdat-0692f5ae7f83",
+        "ecdat-d1dbab484a13",
+        "ecdat-382e394df089",
+        "ecdat-25a774f8bb27",
+        "ecdat-163889901623",
+        "ecdat-ae830f5129d1",
+        "ecdat-0118ce0a8c28",
+        "ecdat-c06a1659a385",
+        "ecdat-b68dcab07531",
+        "ecdat-eca64c5d1624",
+        "ecdat-ef53323668fb",
+        "ecdat-b1e59c1e1ca6",
+        "ecdat-b2fa4d2735eb",
+        "ecdat-a44682050d17",
+        "ecdat-55e7f605b2d3",
+        "ecdat-13235a4c3f43",
+        "ecdat-6ea745b01bee",
+        "ecdat-ce3b64b04242",
+        "ecdat-1ebb6e47cd01",
+        "ecdat-b2f61e4e91b0",
+        "ecdat-77b256df8fc7",
+        "ecdat-b668a8bd04fc",
+        "ecdat-1a5b90ebc93b",
+        "ecdat-c62dcfd00d24",
+        "ecdat-20dbc833da5a",
+        "ecdat-d590c7fdd803",
+        "ecdat-c8c5a9cf2f01",
+        "ecdat-b1cef5e74edf"
+      ]
+    },
+    {
+      "ref": "ecdat-4d3b660c19e7",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-25c1f5e7499f",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-0692f5ae7f83",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-d1dbab484a13",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-382e394df089",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-25a774f8bb27",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-163889901623",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-ae830f5129d1",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-0118ce0a8c28",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-c06a1659a385",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b68dcab07531",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-eca64c5d1624",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-ef53323668fb",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b1e59c1e1ca6",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b2fa4d2735eb",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-a44682050d17",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-55e7f605b2d3",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-13235a4c3f43",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-6ea745b01bee",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-ce3b64b04242",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-1ebb6e47cd01",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b2f61e4e91b0",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-77b256df8fc7",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b668a8bd04fc",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-1a5b90ebc93b",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-c62dcfd00d24",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-20dbc833da5a",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-d590c7fdd803",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-c8c5a9cf2f01",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-b1cef5e74edf",
+      "dependsOn": []
+    }
+  ]
+}

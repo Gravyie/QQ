@@ -1,0 +1,416 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:6760e0b6-ff6e-403d-ad3d-62e8de838ea8",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-07T10:45:10Z",
+    "lifecycles": [
+      {
+        "phase": "operations"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "Quantum Atlas",
+          "version": "1.0.0",
+          "description": "Enterprise Cryptographic Discovery & Analysis Tool (ECDAT)"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "atlas-scan-6760e0b6-ff6e-403d-ad3d-62e8de838ea8",
+      "name": "Enterprise",
+      "description": "Cryptographic estate scanned by Quantum Atlas"
+    },
+    "properties": [
+      {
+        "name": "atlas:crqc-year",
+        "value": "2033"
+      },
+      {
+        "name": "atlas:mosca-violations",
+        "value": "0"
+      },
+      {
+        "name": "atlas:quantum-vulnerable-pct",
+        "value": "0.0"
+      },
+      {
+        "name": "atlas:files-scanned",
+        "value": "2"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-55e87e6b02d4",
+      "name": "ML-KEM",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "kem",
+          "parameterSetIdentifier": "ML-KEM",
+          "classicalSecurityLevel": 192,
+          "nistQuantumSecurityLevel": 3,
+          "cryptoFunctions": [
+            "encapsulate",
+            "decapsulate"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "2.16.840.1.101.3.4.4"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+            "line": 8,
+            "additionalContext": "KEM = \"ML-KEM-768\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "pq_safe"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "info"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "0.8"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.58"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-811c90854f06",
+      "name": "ML-DSA",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "ML-DSA",
+          "classicalSecurityLevel": 192,
+          "nistQuantumSecurityLevel": 3,
+          "cryptoFunctions": [
+            "sign",
+            "verify"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "2.16.840.1.101.3.4.3.17"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+            "line": 9,
+            "additionalContext": "SIG = \"ML-DSA-65\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "pq_safe"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "info"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "0.8"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "-0.42"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "7"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "ecdat-4cae2f040a13",
+      "name": "ML-KEM",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "kem",
+          "parameterSetIdentifier": "ML-KEM",
+          "classicalSecurityLevel": 192,
+          "nistQuantumSecurityLevel": 3,
+          "cryptoFunctions": [
+            "encapsulate",
+            "decapsulate"
+          ],
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic"
+        },
+        "oid": "2.16.840.1.101.3.4.4"
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+            "line": 13,
+            "additionalContext": "\"\"\"Hybrid X25519 + ML-KEM-768, mirroring the deployed TLS group.\"\"\""
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "pq_safe"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "info"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "0.8"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "algorithm-use"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "source-code"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.58"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ecdat-9e29ca1b9b07",
+      "name": "liboqs-python",
+      "version": "0.10.0",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+            "line": 2,
+            "additionalContext": "liboqs-python==0.10.0"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "pq_safe"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "info"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "0.8"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "library"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "library-manifest"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.75"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "ecdat-9ef6a4a8ddec",
+      "name": "cryptography",
+      "version": "44.0.0",
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+            "line": 3,
+            "additionalContext": "cryptography==44.0.0"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "atlas:quantum-impact",
+          "value": "unknown"
+        },
+        {
+          "name": "atlas:severity",
+          "value": "low"
+        },
+        {
+          "name": "atlas:risk-score",
+          "value": "2.2"
+        },
+        {
+          "name": "atlas:business-criticality",
+          "value": "medium"
+        },
+        {
+          "name": "atlas:artifact-type",
+          "value": "library"
+        },
+        {
+          "name": "atlas:discovery-source",
+          "value": "library-manifest"
+        },
+        {
+          "name": "atlas:mosca-violated",
+          "value": "false"
+        },
+        {
+          "name": "atlas:mosca-margin-years",
+          "value": "1.75"
+        },
+        {
+          "name": "atlas:data-lifetime-years",
+          "value": "5"
+        },
+        {
+          "name": "atlas:migration-months",
+          "value": "3"
+        },
+        {
+          "name": "atlas:migration-effort",
+          "value": "medium"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "atlas-scan-6760e0b6-ff6e-403d-ad3d-62e8de838ea8",
+      "dependsOn": [
+        "ecdat-55e87e6b02d4",
+        "ecdat-811c90854f06",
+        "ecdat-4cae2f040a13",
+        "ecdat-9e29ca1b9b07",
+        "ecdat-9ef6a4a8ddec"
+      ]
+    },
+    {
+      "ref": "ecdat-55e87e6b02d4",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-811c90854f06",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-4cae2f040a13",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-9e29ca1b9b07",
+      "dependsOn": []
+    },
+    {
+      "ref": "ecdat-9ef6a4a8ddec",
+      "dependsOn": []
+    }
+  ]
+}

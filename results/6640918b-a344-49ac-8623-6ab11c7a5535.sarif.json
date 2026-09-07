@@ -1,0 +1,1219 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Quantum Atlas",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/quantum-atlas",
+          "rules": [
+            {
+              "id": "atlas/broken_classically/hash",
+              "name": "broken-classically-hash",
+              "shortDescription": {
+                "text": "Classically broken hash"
+              },
+              "fullDescription": {
+                "text": "This primitive is already exploitable with classical computers and should be removed regardless of quantum timelines."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "broken_classically"
+                ],
+                "security-severity": "9.0"
+              }
+            },
+            {
+              "id": "atlas/classical_ok/kdf",
+              "name": "classical-ok-kdf",
+              "shortDescription": {
+                "text": "Classically adequate kdf"
+              },
+              "fullDescription": {
+                "text": "Adequate parameters for both classical and quantum adversaries."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "classical_ok"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/grover/symmetric-cipher",
+              "name": "grover-symmetric-cipher",
+              "shortDescription": {
+                "text": "Quantum-weakened symmetric-cipher (effective key length halved by Grover)"
+              },
+              "fullDescription": {
+                "text": "Grover's algorithm gives a quadratic speed-up on key search, halving the effective strength of symmetric keys and hash preimages."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "grover"
+                ],
+                "security-severity": "4.2"
+              }
+            },
+            {
+              "id": "atlas/classical_ok/mac",
+              "name": "classical-ok-mac",
+              "shortDescription": {
+                "text": "Classically adequate mac"
+              },
+              "fullDescription": {
+                "text": "Adequate parameters for both classical and quantum adversaries."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "classical_ok"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/shor_broken/private-key",
+              "name": "shor-broken-private-key",
+              "shortDescription": {
+                "text": "Quantum-vulnerable private-key (broken by Shor's algorithm)"
+              },
+              "fullDescription": {
+                "text": "Shor's algorithm recovers private keys from public keys for factoring and discrete-log primitives. Traffic protected this way can be recorded today and decrypted once a CRQC exists."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "shor_broken"
+                ],
+                "security-severity": "10.0"
+              }
+            },
+            {
+              "id": "atlas/unknown/library",
+              "name": "unknown-library",
+              "shortDescription": {
+                "text": "Unclassified library"
+              },
+              "fullDescription": {
+                "text": "Impact could not be determined from available evidence."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "unknown"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/unknown/asymmetric-encryption",
+              "name": "unknown-asymmetric-encryption",
+              "shortDescription": {
+                "text": "Unclassified asymmetric-encryption"
+              },
+              "fullDescription": {
+                "text": "Impact could not be determined from available evidence."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "unknown"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/unknown/signature",
+              "name": "unknown-signature",
+              "shortDescription": {
+                "text": "Unclassified signature"
+              },
+              "fullDescription": {
+                "text": "Impact could not be determined from available evidence."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "unknown"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/broken_classically/protocol",
+              "name": "broken-classically-protocol",
+              "shortDescription": {
+                "text": "Classically broken protocol"
+              },
+              "fullDescription": {
+                "text": "This primitive is already exploitable with classical computers and should be removed regardless of quantum timelines."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "broken_classically"
+                ],
+                "security-severity": "9.0"
+              }
+            },
+            {
+              "id": "atlas/shor_broken/protocol",
+              "name": "shor-broken-protocol",
+              "shortDescription": {
+                "text": "Quantum-vulnerable protocol (broken by Shor's algorithm)"
+              },
+              "fullDescription": {
+                "text": "Shor's algorithm recovers private keys from public keys for factoring and discrete-log primitives. Traffic protected this way can be recorded today and decrypted once a CRQC exists."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "shor_broken"
+                ],
+                "security-severity": "7.9"
+              }
+            },
+            {
+              "id": "atlas/shor_broken/cipher-suite",
+              "name": "shor-broken-cipher-suite",
+              "shortDescription": {
+                "text": "Quantum-vulnerable cipher-suite (broken by Shor's algorithm)"
+              },
+              "fullDescription": {
+                "text": "Shor's algorithm recovers private keys from public keys for factoring and discrete-log primitives. Traffic protected this way can be recorded today and decrypted once a CRQC exists."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "shor_broken"
+                ],
+                "security-severity": "7.9"
+              }
+            },
+            {
+              "id": "atlas/grover/cipher-suite",
+              "name": "grover-cipher-suite",
+              "shortDescription": {
+                "text": "Quantum-weakened cipher-suite (effective key length halved by Grover)"
+              },
+              "fullDescription": {
+                "text": "Grover's algorithm gives a quadratic speed-up on key search, halving the effective strength of symmetric keys and hash preimages."
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "grover"
+                ],
+                "security-severity": "4.4"
+              }
+            },
+            {
+              "id": "atlas/unknown/service",
+              "name": "unknown-service",
+              "shortDescription": {
+                "text": "Unclassified service"
+              },
+              "fullDescription": {
+                "text": "Impact could not be determined from available evidence."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "unknown"
+                ],
+                "security-severity": "2.5"
+              }
+            },
+            {
+              "id": "atlas/unknown/hardware",
+              "name": "unknown-hardware",
+              "shortDescription": {
+                "text": "Unclassified hardware"
+              },
+              "fullDescription": {
+                "text": "Impact could not be determined from available evidence."
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "properties": {
+                "tags": [
+                  "cryptography",
+                  "post-quantum",
+                  "unknown"
+                ],
+                "security-severity": "2.5"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "atlas/broken_classically/hash",
+          "level": "error",
+          "message": {
+            "text": "SHA-1: Classically broken hash. Recommended replacement: SHA-384"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/settlement.py"
+                },
+                "region": {
+                  "startLine": 15,
+                  "snippet": {
+                    "text": "digest = hashlib.sha1(batch).digest()"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-4d3b660c19e7"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/broken_classically/hash",
+          "level": "error",
+          "message": {
+            "text": "SHA-1: Classically broken hash. Recommended replacement: SHA-384"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/settlement.py"
+                },
+                "region": {
+                  "startLine": 16,
+                  "snippet": {
+                    "text": "return rsa_key.sign(digest, padding.PKCS1v15(), utils.Prehashed(hashes.SHA1()))"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-25c1f5e7499f"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/classical_ok/kdf",
+          "level": "note",
+          "message": {
+            "text": "PBKDF2: Classically adequate kdf. Recommended replacement: Argon2"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 14,
+                  "snippet": {
+                    "text": "from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-0692f5ae7f83"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/grover/symmetric-cipher",
+          "level": "warning",
+          "message": {
+            "text": "AES: Quantum-weakened symmetric-cipher (effective key length halved by Grover). Recommended replacement: AES-256"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 33,
+                  "snippet": {
+                    "text": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-d1dbab484a13"
+          },
+          "properties": {
+            "riskScore": 4.2,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/grover/symmetric-cipher",
+          "level": "warning",
+          "message": {
+            "text": "AES-CBC: Quantum-weakened symmetric-cipher (effective key length halved by Grover). Recommended replacement: AES-256"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 33,
+                  "snippet": {
+                    "text": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-382e394df089"
+          },
+          "properties": {
+            "riskScore": 4.7,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/classical_ok/kdf",
+          "level": "note",
+          "message": {
+            "text": "PBKDF2: Classically adequate kdf. Recommended replacement: Argon2"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 40,
+                  "snippet": {
+                    "text": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-25a774f8bb27"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/classical_ok/mac",
+          "level": "note",
+          "message": {
+            "text": "HMAC: Classically adequate mac. Recommended replacement: HMAC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 40,
+                  "snippet": {
+                    "text": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-163889901623"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/classical_ok/mac",
+          "level": "note",
+          "message": {
+            "text": "HMAC: Classically adequate mac. Recommended replacement: HMAC"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 45,
+                  "snippet": {
+                    "text": "return hmac.new(key, payload, hashlib.sha256).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-ae830f5129d1"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/broken_classically/hash",
+          "level": "error",
+          "message": {
+            "text": "MD5: Classically broken hash. Recommended replacement: SHA-384"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/src/tokenisation.py"
+                },
+                "region": {
+                  "startLine": 50,
+                  "snippet": {
+                    "text": "return hashlib.md5(serial.encode()).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-0118ce0a8c28"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/private-key",
+          "level": "error",
+          "message": {
+            "text": "RSA private key: Quantum-vulnerable private-key (broken by Shor's algorithm). Recommended replacement: ML-DSA-65. Mosca violation: data lifetime 8y + migration 9mo exceeds the 2033 CRQC horizon by 1.8y"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/secrets/jwt-signing.key"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "-----BEGIN RSA PRIVATE KEY-----"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-c06a1659a385"
+          },
+          "properties": {
+            "riskScore": 10.0,
+            "businessCriticality": "critical",
+            "moscaViolated": true
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/library",
+          "level": "note",
+          "message": {
+            "text": "cryptography: Unclassified library"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/requirements.txt"
+                },
+                "region": {
+                  "startLine": 2,
+                  "snippet": {
+                    "text": "cryptography==41.0.7"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b68dcab07531"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/library",
+          "level": "note",
+          "message": {
+            "text": "pyjwt: Unclassified library"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/requirements.txt"
+                },
+                "region": {
+                  "startLine": 3,
+                  "snippet": {
+                    "text": "pyjwt==2.8.0"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-eca64c5d1624"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/library",
+          "level": "note",
+          "message": {
+            "text": "pyopenssl: Unclassified library"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/requirements.txt"
+                },
+                "region": {
+                  "startLine": 8,
+                  "snippet": {
+                    "text": "pyopenssl==23.3.0"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-ef53323668fb"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/asymmetric-encryption",
+          "level": "note",
+          "message": {
+            "text": "RSA: Unclassified asymmetric-encryption. Recommended replacement: ML-KEM-768 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 4,
+                  "snippet": {
+                    "text": "customer_master_key_spec = \"RSA_4096\""
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b1e59c1e1ca6"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/signature",
+          "level": "note",
+          "message": {
+            "text": "ECDSA-P256: Unclassified signature. Recommended replacement: ML-DSA-65 (transitional hybrid: ML-DSA-65+ECDSA-P256)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 11,
+                  "snippet": {
+                    "text": "customer_master_key_spec = \"ECC_NIST_P256\""
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b2fa4d2735eb"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/broken_classically/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.1: Classically broken protocol. Recommended replacement: TLSv1.3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 22,
+                  "snippet": {
+                    "text": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-a44682050d17"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.2: Quantum-vulnerable protocol (broken by Shor's algorithm). Recommended replacement: TLSv1.3 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 22,
+                  "snippet": {
+                    "text": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-55e7f605b2d3"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/broken_classically/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.0: Classically broken protocol. Recommended replacement: TLSv1.3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 17,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-13235a4c3f43"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/broken_classically/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.1: Classically broken protocol. Recommended replacement: TLSv1.3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 17,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-6ea745b01bee"
+          },
+          "properties": {
+            "riskScore": 9.0,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.2: Quantum-vulnerable protocol (broken by Shor's algorithm). Recommended replacement: TLSv1.3 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 17,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-ce3b64b04242"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/cipher-suite",
+          "level": "error",
+          "message": {
+            "text": "ECDH: Quantum-vulnerable cipher-suite (broken by Shor's algorithm). Recommended replacement: ML-KEM-768 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 18,
+                  "snippet": {
+                    "text": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-1ebb6e47cd01"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/cipher-suite",
+          "level": "error",
+          "message": {
+            "text": "DH: Quantum-vulnerable cipher-suite (broken by Shor's algorithm). Recommended replacement: ML-KEM-768 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 18,
+                  "snippet": {
+                    "text": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b2f61e4e91b0"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/grover/cipher-suite",
+          "level": "warning",
+          "message": {
+            "text": "AES-128: Quantum-weakened cipher-suite (effective key length halved by Grover). Recommended replacement: AES-256"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 18,
+                  "snippet": {
+                    "text": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-77b256df8fc7"
+          },
+          "properties": {
+            "riskScore": 4.4,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/grover/cipher-suite",
+          "level": "warning",
+          "message": {
+            "text": "3DES: Quantum-weakened cipher-suite (effective key length halved by Grover). Recommended replacement: AES-256"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 18,
+                  "snippet": {
+                    "text": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b668a8bd04fc"
+          },
+          "properties": {
+            "riskScore": 4.4,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.2: Quantum-vulnerable protocol (broken by Shor's algorithm). Recommended replacement: TLSv1.3 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 31,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1.2 TLSv1.3;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-1a5b90ebc93b"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/protocol",
+          "level": "error",
+          "message": {
+            "text": "TLSv1.3: Quantum-vulnerable protocol (broken by Shor's algorithm). Recommended replacement: X25519MLKEM768"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 31,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1.2 TLSv1.3;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-c62dcfd00d24"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/shor_broken/cipher-suite",
+          "level": "error",
+          "message": {
+            "text": "ECDH: Quantum-vulnerable cipher-suite (broken by Shor's algorithm). Recommended replacement: ML-KEM-768 (transitional hybrid: X25519MLKEM768)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/config/nginx.conf"
+                },
+                "region": {
+                  "startLine": 32,
+                  "snippet": {
+                    "text": "ssl_ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-20dbc833da5a"
+          },
+          "properties": {
+            "riskScore": 7.9,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/service",
+          "level": "note",
+          "message": {
+            "text": "AWS KMS (Terraform): Unclassified service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 2,
+                  "snippet": {
+                    "text": "resource \"aws_kms_key\" \"pan_master\" {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-d590c7fdd803"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/service",
+          "level": "note",
+          "message": {
+            "text": "AWS KMS (Terraform): Unclassified service"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 9,
+                  "snippet": {
+                    "text": "resource \"aws_kms_key\" \"settlement_signing\" {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-c8c5a9cf2f01"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        },
+        {
+          "ruleId": "atlas/unknown/hardware",
+          "level": "note",
+          "message": {
+            "text": "AWS CloudHSM: Unclassified hardware"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/estate/payments-service/infra/kms.tf"
+                },
+                "region": {
+                  "startLine": 15,
+                  "snippet": {
+                    "text": "resource \"aws_cloudhsm_v2_cluster\" \"branch_hsm\" {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "atlasArtifactId": "ecdat-b1cef5e74edf"
+          },
+          "properties": {
+            "riskScore": 2.5,
+            "businessCriticality": "critical",
+            "moscaViolated": false
+          }
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "startTimeUtc": "2026-09-07T10:45:09Z"
+        }
+      ]
+    }
+  ]
+}

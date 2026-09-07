@@ -1,0 +1,251 @@
+{
+  "scan_id": "6760e0b6-ff6e-403d-ad3d-62e8de838ea8",
+  "config": {
+    "targets": [
+      {
+        "path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot",
+        "kind": "source"
+      }
+    ],
+    "crqc_year": 2033,
+    "organization": "Enterprise",
+    "data_lifetime_default_years": 5,
+    "migration_months_default": 18
+  },
+  "summary": {
+    "scan_id": "6760e0b6-ff6e-403d-ad3d-62e8de838ea8",
+    "started_at": "2026-09-07T10:45:10Z",
+    "finished_at": "2026-09-07T10:45:10Z",
+    "targets": 1,
+    "files_scanned": 2,
+    "artifacts_found": 5,
+    "by_severity": {
+      "info": 4,
+      "low": 1
+    },
+    "by_type": {
+      "algorithm-use": 3,
+      "library": 2
+    },
+    "by_impact": {
+      "pq_safe": 4,
+      "unknown": 1
+    },
+    "quantum_vulnerable_pct": 0.0,
+    "mosca_violations": 0,
+    "migration_effort_days": 15,
+    "duration_seconds": 0.0,
+    "status": "complete"
+  },
+  "artifacts": [
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-KEM",
+      "category": "kem",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 8,
+        "snippet": "KEM = \"ML-KEM-768\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-55e87e6b02d4"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-DSA",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 9,
+        "snippet": "SIG = \"ML-DSA-65\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": -0.42,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 7,
+      "id": "ecdat-811c90854f06"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-KEM",
+      "category": "kem",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 13,
+        "snippet": "\"\"\"Hybrid X25519 + ML-KEM-768, mirroring the deployed TLS group.\"\"\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-4cae2f040a13"
+    },
+    {
+      "artifact_type": "library",
+      "name": "liboqs-python",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+        "line": 2,
+        "snippet": "liboqs-python==0.10.0"
+      },
+      "properties": {
+        "version": "0.10.0",
+        "manifest": "requirements.txt",
+        "pqc": true,
+        "pqc_note": "Python bindings to liboqs",
+        "lib_category": "pqc"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-9e29ca1b9b07"
+    },
+    {
+      "artifact_type": "library",
+      "name": "cryptography",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+        "line": 3,
+        "snippet": "cryptography==44.0.0"
+      },
+      "properties": {
+        "version": "44.0.0",
+        "manifest": "requirements.txt",
+        "pqc": true,
+        "pqc_note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups",
+        "lib_category": "tls-crypto"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "cryptography",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups"
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-9ef6a4a8ddec"
+    }
+  ],
+  "events": [],
+  "probes": [],
+  "plan": {
+    "waves": [
+      {
+        "wave": 2,
+        "title": "Upgrade cryptographic providers",
+        "rationale": "Libraries, runtimes and container images must expose ML-KEM and ML-DSA before anything above them can use them. This wave unblocks every later wave and is mostly dependency bumps.",
+        "artifact_count": 1,
+        "work_units": 1,
+        "effort_days": 15,
+        "mosca_violations": 0,
+        "critical_or_high": 0,
+        "targets": [],
+        "artifact_ids": [
+          "ecdat-9ef6a4a8ddec"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-9ef6a4a8ddec",
+            "name": "cryptography",
+            "severity": "low",
+            "risk_score": 2.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+            "line": 3,
+            "target": null,
+            "hybrid": null
+          }
+        ],
+        "start_month": 0.0,
+        "end_month": 0.2,
+        "months": 0.2
+      }
+    ],
+    "total_effort_days": 15,
+    "total_work_units": 1,
+    "crqc_year": 2033,
+    "years_until_crqc": 7,
+    "schedule": {
+      "engineers": 4,
+      "engineers_assumed": 4,
+      "days_per_engineer_month": 18.0,
+      "total_days": 15,
+      "total_months": 0.2,
+      "finish_year": 2026,
+      "finish_label": "Q1 2026",
+      "crqc_year": 2033,
+      "meets_deadline": true,
+      "slack_years": 7.0,
+      "rows": [
+        {
+          "wave": 2,
+          "title": "Upgrade cryptographic providers",
+          "start_month": 0.0,
+          "end_month": 0.2,
+          "months": 0.2
+        }
+      ]
+    },
+    "nothing_to_do": 4
+  },
+  "cbom_path": "/Users/garv/Documents/Projects/quantum-atlas/results/6760e0b6-ff6e-403d-ad3d-62e8de838ea8.cbom.json",
+  "sarif_path": "/Users/garv/Documents/Projects/quantum-atlas/results/6760e0b6-ff6e-403d-ad3d-62e8de838ea8.sarif.json",
+  "report_path": "/Users/garv/Documents/Projects/quantum-atlas/results/6760e0b6-ff6e-403d-ad3d-62e8de838ea8.report.md"
+}
