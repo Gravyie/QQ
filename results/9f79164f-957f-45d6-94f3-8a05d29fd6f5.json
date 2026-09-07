@@ -1,0 +1,4804 @@
+{
+  "scan_id": "9f79164f-957f-45d6-94f3-8a05d29fd6f5",
+  "config": {
+    "targets": [
+      {
+        "path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate",
+        "kind": "source"
+      }
+    ],
+    "crqc_year": 2033,
+    "organization": "Meridian Financial Services",
+    "data_lifetime_default_years": 5,
+    "migration_months_default": 18
+  },
+  "summary": {
+    "scan_id": "9f79164f-957f-45d6-94f3-8a05d29fd6f5",
+    "started_at": "2026-09-07T17:20:17Z",
+    "finished_at": "2026-09-07T17:20:18Z",
+    "targets": 1,
+    "files_scanned": 34,
+    "artifacts_found": 101,
+    "by_severity": {
+      "critical": 27,
+      "low": 36,
+      "medium": 11,
+      "high": 23,
+      "info": 4
+    },
+    "by_type": {
+      "algorithm-use": 34,
+      "certificate": 7,
+      "key": 6,
+      "library": 10,
+      "cloud-service": 8,
+      "protocol": 29,
+      "configuration": 4,
+      "hardware": 3
+    },
+    "by_impact": {
+      "broken_classically": 18,
+      "classical_ok": 9,
+      "grover": 12,
+      "shor_broken": 32,
+      "pq_safe": 4,
+      "unknown": 26
+    },
+    "quantum_vulnerable_pct": 43.6,
+    "mosca_violations": 10,
+    "migration_effort_days": 1443,
+    "duration_seconds": 0.09,
+    "status": "complete"
+  },
+  "artifacts": [
+    {
+      "artifact_type": "algorithm-use",
+      "name": "SHA-1",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+        "line": 15,
+        "snippet": "digest = hashlib.sha1(batch).digest()"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "SHAttered 2017; NIST retires it in 2030.",
+        "for": "SHA-1",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-4d3b660c19e7"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "SHA-1",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+        "line": 16,
+        "snippet": "return rsa_key.sign(digest, padding.PKCS1v15(), utils.Prehashed(hashes.SHA1()))"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "SHAttered 2017; NIST retires it in 2030.",
+        "for": "SHA-1",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-25c1f5e7499f"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "PBKDF2",
+      "category": "kdf",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 14,
+        "snippet": "from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "Argon2",
+        "effort": "low",
+        "note": "Quantum-irrelevant, but raise iterations to the 210k NIST floor or move to Argon2id.",
+        "for": "PBKDF2",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-0692f5ae7f83"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 33,
+        "snippet": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Unqualified AES: pin the key size. AES-128 leaves 64-bit post-quantum strength.",
+        "for": "AES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-d1dbab484a13"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES-CBC",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 33,
+        "snippet": "cipher = Cipher(algorithms.AES(key), modes.CBC(iv))"
+      },
+      "properties": {
+        "language": "py",
+        "mode": "CBC"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.7,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "CBC is unauthenticated. Move to AES-256-GCM and gain integrity.",
+        "for": "AES-CBC",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-382e394df089"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "PBKDF2",
+      "category": "kdf",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 40,
+        "snippet": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "Argon2",
+        "effort": "low",
+        "note": "Quantum-irrelevant, but raise iterations to the 210k NIST floor or move to Argon2id.",
+        "for": "PBKDF2",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-25a774f8bb27"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "HMAC",
+      "category": "mac",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 40,
+        "snippet": "kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100_000)"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "HMAC",
+        "effort": "low",
+        "for": "HMAC",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-163889901623"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "HMAC",
+      "category": "mac",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 45,
+        "snippet": "return hmac.new(key, payload, hashlib.sha256).hexdigest()"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "HMAC",
+        "effort": "low",
+        "for": "HMAC",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-ae830f5129d1"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "MD5",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+        "line": 50,
+        "snippet": "return hashlib.md5(serial.encode()).hexdigest()"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "Chosen-prefix collisions are trivial. Replace regardless of quantum timeline.",
+        "for": "MD5",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-0118ce0a8c28"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+        "line": 8,
+        "snippet": "return generateKeyPairSync(\"rsa\", {"
+      },
+      "properties": {
+        "language": "ts"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 8.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.33,
+      "migration_months": 8,
+      "hndl_exposure": 1.0,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-386244a2fd9b"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "Ed25519",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+        "line": 16,
+        "snippet": "return generateKeyPairSync(\"ed25519\", {"
+      },
+      "properties": {
+        "language": "ts"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 9.3,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.67,
+      "migration_months": 8,
+      "hndl_exposure": 1.0,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+Ed25519",
+        "effort": "medium",
+        "note": "Edwards curves are as Shor-exposed as NIST curves.",
+        "for": "Ed25519",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "sig_bytes": 64,
+          "ops_ms": 0.05
+        },
+        "wire_delta_bytes": 5165
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 7,
+      "id": "ecdat-06baade1e2d9"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "MD5",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+        "line": 30,
+        "snippet": "return createHash(\"md5\").update(url).digest(\"hex\");"
+      },
+      "properties": {
+        "language": "ts"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "Chosen-prefix collisions are trivial. Replace regardless of quantum timeline.",
+        "for": "MD5",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-5b88c7eb7182"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES-128",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+        "line": 35,
+        "snippet": "const cipher = createCipheriv(\"aes-128-cbc\", key, iv);"
+      },
+      "properties": {
+        "language": "ts"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Key-size change only, no protocol or API change.",
+        "for": "AES-128",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-a4f76d212921"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+        "line": 9,
+        "snippet": "public static RSA CreateAccountSigningKey() => RSA.Create(2048);"
+      },
+      "properties": {
+        "language": "cs"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 8.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.33,
+      "migration_months": 8,
+      "hndl_exposure": 0.85,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-f13be6c85dc2"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ECDSA",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+        "line": 11,
+        "snippet": "public static ECDsa CreateStatementSigningKey() => ECDsa.Create(ECCurve.NamedCurves.nistP256);"
+      },
+      "properties": {
+        "language": "cs"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 9.3,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.67,
+      "migration_months": 8,
+      "hndl_exposure": 0.9,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Composite certificates let you migrate before every verifier is ready.",
+        "for": "ECDSA",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "sig_bytes": 64,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": 5132
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 7,
+      "id": "ecdat-ada96e21f0e8"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+        "line": 15,
+        "snippet": "using Aes aes = Aes.Create();"
+      },
+      "properties": {
+        "language": "cs"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Unqualified AES: pin the key size. AES-128 leaves 64-bit post-quantum strength.",
+        "for": "AES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-35ce468165e6"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "SHA-1",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+        "line": 25,
+        "snippet": "using var sha1 = SHA1.Create();"
+      },
+      "properties": {
+        "language": "cs"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "SHAttered 2017; NIST retires it in 2030.",
+        "for": "SHA-1",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-72560510f4ee"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "X25519",
+      "category": "key-agreement",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/treasury-archive/src/archive.py",
+        "line": 15,
+        "snippet": "private = x25519.X25519PrivateKey.generate()"
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 9.9,
+      "mosca_violated": true,
+      "mosca_margin_years": -18.67,
+      "migration_months": 8,
+      "hndl_exposure": 0.9,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "low",
+        "note": "The hybrid group is already the browser default, so this is a config change.",
+        "for": "X25519",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "ops_ms": 0.04
+        },
+        "wire_delta_bytes": 2240
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 25,
+      "id": "ecdat-0e1a5c6cd72b"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/treasury-archive/src/archive.py",
+        "line": 21,
+        "snippet": "return AESGCM(key).encrypt(nonce, record, None)"
+      },
+      "properties": {
+        "language": "py",
+        "pattern_class": "aes-gcm"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 5.8,
+      "mosca_violated": true,
+      "mosca_margin_years": -18.67,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Unqualified AES: pin the key size. AES-128 leaves 64-bit post-quantum strength.",
+        "for": "AES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 25,
+      "id": "ecdat-b7494d658fed"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-KEM",
+      "category": "kem",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 8,
+        "snippet": "KEM = \"ML-KEM-768\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-55e87e6b02d4"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-DSA",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 9,
+        "snippet": "SIG = \"ML-DSA-65\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": -0.42,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 7,
+      "id": "ecdat-811c90854f06"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ML-KEM",
+      "category": "kem",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/src/pilot.py",
+        "line": 13,
+        "snippet": "\"\"\"Hybrid X25519 + ML-KEM-768, mirroring the deployed TLS group.\"\"\""
+      },
+      "properties": {
+        "language": "py"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-4cae2f040a13"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "ECDSA",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+        "line": 16,
+        "snippet": "return ecdsa.GenerateKey(elliptic.P256(), rand.Reader)"
+      },
+      "properties": {
+        "language": "go"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.8,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.42,
+      "migration_months": 5,
+      "hndl_exposure": 0.83,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Composite certificates let you migrate before every verifier is ready.",
+        "for": "ECDSA",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "sig_bytes": 64,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": 5132
+      },
+      "business_criticality": "high",
+      "lifetime_years": 7,
+      "id": "ecdat-9db344a0817a"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+        "line": 21,
+        "snippet": "return rsa.GenerateKey(rand.Reader, 4096)"
+      },
+      "properties": {
+        "language": "go"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": 0.78,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-9d73f8a51efd"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "Ed25519",
+      "category": "signature",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+        "line": 26,
+        "snippet": "return ed25519.GenerateKey(rand.Reader)"
+      },
+      "properties": {
+        "language": "go"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.8,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.42,
+      "migration_months": 5,
+      "hndl_exposure": 0.83,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+Ed25519",
+        "effort": "medium",
+        "note": "Edwards curves are as Shor-exposed as NIST curves.",
+        "for": "Ed25519",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "sig_bytes": 64,
+          "ops_ms": 0.05
+        },
+        "wire_delta_bytes": 5165
+      },
+      "business_criticality": "high",
+      "lifetime_years": 7,
+      "id": "ecdat-af78d0042b37"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+        "line": 15,
+        "snippet": "KeyPairGenerator generator = KeyPairGenerator.getInstance(\"RSA\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": 0.78,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-d258a8ebc8d4"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "SHA-1",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+        "line": 30,
+        "snippet": "Signature signature = Signature.getInstance(\"SHA1withRSA\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "SHAttered 2017; NIST retires it in 2030.",
+        "for": "SHA-1",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 3,
+      "id": "ecdat-27a7d76baf57"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+        "line": 37,
+        "snippet": "KeyGenerator generator = KeyGenerator.getInstance(\"AES\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Unqualified AES: pin the key size. AES-128 leaves 64-bit post-quantum strength.",
+        "for": "AES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 3,
+      "id": "ecdat-818db1391005"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+        "line": 44,
+        "snippet": "Cipher cipher = Cipher.getInstance(\"RSA/ECB/PKCS1Padding\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.58,
+      "migration_months": 5,
+      "hndl_exposure": 0.78,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-a7ba1cba6669"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "MD5",
+      "category": "hash",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+        "line": 51,
+        "snippet": "MessageDigest digest = MessageDigest.getInstance(\"MD5\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "Chosen-prefix collisions are trivial. Replace regardless of quantum timeline.",
+        "for": "MD5",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 3,
+      "id": "ecdat-6db27b096b65"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "DES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/legacy/BranchTerminalCipher.java",
+        "line": 11,
+        "snippet": "Cipher cipher = Cipher.getInstance(\"DESede/CBC/PKCS5Padding\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Brute-forceable since 1998.",
+        "for": "DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 3,
+      "id": "ecdat-35a8b3c6023f"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "DES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/legacy/BranchTerminalCipher.java",
+        "line": 18,
+        "snippet": "Cipher cipher = Cipher.getInstance(\"DES/CBC/PKCS5Padding\");"
+      },
+      "properties": {
+        "language": "java"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.58,
+      "migration_months": 5,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Brute-forceable since 1998.",
+        "for": "DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 3,
+      "id": "ecdat-368318428234"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "3DES",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+        "line": 24,
+        "snippet": "EVP_EncryptInit_ex(ctx, EVP_des_ede3_cbc(), NULL, kek, NULL);"
+      },
+      "properties": {
+        "language": "c"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Disallowed by NIST SP 800-131A Rev.2 and only a 64-bit block.",
+        "for": "3DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-baa2f0e590b3"
+    },
+    {
+      "artifact_type": "algorithm-use",
+      "name": "AES-256",
+      "category": "symmetric-cipher",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+        "line": 35,
+        "snippet": "EVP_EncryptInit_ex(ctx, EVP_aes_256_gcm(), NULL, kek, iv);"
+      },
+      "properties": {
+        "language": "c"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.33,
+      "migration_months": 8,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "for": "AES-256",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-dac97a1fb12d"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "DSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/signing/build-signing.pem",
+        "snippet": "CN=build-signing.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=build-signing.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:53+00:00",
+        "not_after": "2029-08-30T04:49:53+00:00",
+        "expired": false,
+        "lifetime_days": 1095,
+        "key_size": 2048,
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "72cc30e3d4a442ee13805e5adf3c2d08496ce543",
+        "self_signed": false
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 8.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.85,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Reissue from a CA offering composite or PQC signatures.",
+        "for": "DSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 3,
+      "id": "ecdat-646e082cb7f1"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "RSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/ca/root-ca.pem",
+        "snippet": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:52+00:00",
+        "not_after": "2036-08-28T04:49:52+00:00",
+        "expired": false,
+        "lifetime_days": 3650,
+        "key_size": 4096,
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "3ea86b8c16c853747b0f2e8e6bd29fa94614ddbb",
+        "self_signed": true
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 9.9,
+      "mosca_violated": true,
+      "mosca_margin_years": -8.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.85,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Reissue from a CA offering composite or PQC signatures.",
+        "for": "RSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 15,
+      "id": "ecdat-8301dd7056e1"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "Ed25519 certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/internal/admin-portal.pem",
+        "snippet": "CN=admin-portal.internal.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=admin-portal.internal.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:53+00:00",
+        "not_after": "2027-08-31T04:49:53+00:00",
+        "expired": false,
+        "lifetime_days": 365,
+        "key_size": 256,
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "463d80e79afa70edf40558567e1f31ef00122189",
+        "self_signed": false
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.6,
+      "mosca_violated": false,
+      "mosca_margin_years": 5.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.78,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+Ed25519",
+        "effort": "medium",
+        "note": "Edwards curves are as Shor-exposed as NIST curves.",
+        "for": "Ed25519 certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "sig_bytes": 64,
+          "ops_ms": 0.05
+        },
+        "wire_delta_bytes": 5165
+      },
+      "business_criticality": "high",
+      "lifetime_years": 1,
+      "id": "ecdat-3e5bca4eb0e8"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "ECDSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/internal/service-mesh.pem",
+        "snippet": "CN=mesh.internal.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=mesh.internal.meridian,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:52+00:00",
+        "not_after": "2026-11-29T04:49:52+00:00",
+        "expired": false,
+        "lifetime_days": 90,
+        "key_size": 256,
+        "curve": "secp256r1",
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "22ee37a3220c2443d5bc1a9f8019924b20576e72",
+        "self_signed": false
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.6,
+      "mosca_violated": false,
+      "mosca_margin_years": 5.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.78,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Composite certificates let you migrate before every verifier is ready.",
+        "for": "ECDSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "sig_bytes": 64,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": 5132
+      },
+      "business_criticality": "high",
+      "lifetime_years": 1,
+      "id": "ecdat-6e86b6e1c4d6"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "RSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/legacy/clearing-partner.crt",
+        "snippet": "CN=legacy-clearing.partner.example"
+      },
+      "properties": {
+        "subject": "CN=legacy-clearing.partner.example",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2022-01-01T00:00:00+00:00",
+        "not_after": "2024-01-01T00:00:00+00:00",
+        "expired": true,
+        "lifetime_days": 730,
+        "key_size": 2048,
+        "signature_algorithm": "sha1WithRSAEncryption",
+        "serial": "1000",
+        "self_signed": false,
+        "expiry_note": "EXPIRED"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 10.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 4.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Reissue from a CA offering composite or PQC signatures.",
+        "for": "RSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 2,
+      "id": "ecdat-934638b42f41"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "ECDSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/edge/edge-cdn.der",
+        "snippet": "CN=edge-cdn.meridian.example,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=edge-cdn.meridian.example,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:52+00:00",
+        "not_after": "2027-02-27T04:49:52+00:00",
+        "expired": false,
+        "lifetime_days": 180,
+        "key_size": 384,
+        "curve": "secp384r1",
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "796ab4119a9a603d1386331045691ac43eda4098",
+        "self_signed": false
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.6,
+      "mosca_violated": false,
+      "mosca_margin_years": 5.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.94,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Composite certificates let you migrate before every verifier is ready.",
+        "for": "ECDSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "sig_bytes": 64,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": 5132
+      },
+      "business_criticality": "high",
+      "lifetime_years": 1,
+      "id": "ecdat-d433f4497bb1"
+    },
+    {
+      "artifact_type": "certificate",
+      "name": "RSA certificate",
+      "category": "certificate",
+      "source": "certificate",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/public/payments-gateway.pem",
+        "snippet": "CN=payments-gateway.meridian.example,O=Meridian Financial Services,ST=Maharashtra,C=IN"
+      },
+      "properties": {
+        "subject": "CN=payments-gateway.meridian.example,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "issuer": "CN=Meridian Root CA,O=Meridian Financial Services,ST=Maharashtra,C=IN",
+        "not_before": "2026-08-31T04:49:52+00:00",
+        "not_after": "2027-10-02T04:49:52+00:00",
+        "expired": false,
+        "lifetime_days": 397,
+        "key_size": 2048,
+        "signature_algorithm": "sha256WithRSAEncryption",
+        "serial": "29362e0c86fc98bcbd0693e9f3234c3ae2a77831",
+        "self_signed": false
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 5.5,
+      "migration_months": 6,
+      "hndl_exposure": 1.0,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "note": "Reissue from a CA offering composite or PQC signatures.",
+        "for": "RSA certificate",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 1,
+      "id": "ecdat-a7baea880ec3"
+    },
+    {
+      "artifact_type": "key",
+      "name": "RSA private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/secrets/jwt-signing.key",
+        "line": 1,
+        "snippet": "-----BEGIN RSA PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": false,
+        "size_bytes": 1675
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 10.0,
+      "mosca_violated": true,
+      "mosca_margin_years": -1.75,
+      "migration_months": 9,
+      "hndl_exposure": 0.95,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "RSA private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 8,
+      "id": "ecdat-c06a1659a385"
+    },
+    {
+      "artifact_type": "key",
+      "name": "PRIVATE KEY----- private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/signing/build-signing.key",
+        "line": 1,
+        "snippet": "-----BEGIN PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": false,
+        "size_bytes": 891
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 3.5,
+      "mosca_violated": false,
+      "mosca_margin_years": -1.75,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "PRIVATE KEY----- private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 8,
+      "id": "ecdat-bf0ad1c998e1"
+    },
+    {
+      "artifact_type": "key",
+      "name": "PRIVATE KEY----- private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/ca/root-ca.key",
+        "line": 1,
+        "snippet": "-----BEGIN PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": false,
+        "size_bytes": 3272
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 3.5,
+      "mosca_violated": false,
+      "mosca_margin_years": -8.75,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "PRIVATE KEY----- private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 15,
+      "id": "ecdat-620875102933"
+    },
+    {
+      "artifact_type": "key",
+      "name": "ENCRYPTED private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/internal/vault-unseal.key",
+        "line": 1,
+        "snippet": "-----BEGIN ENCRYPTED PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": true,
+        "size_bytes": 412
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": -1.75,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "ENCRYPTED private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 8,
+      "id": "ecdat-e62a6533ebc2"
+    },
+    {
+      "artifact_type": "key",
+      "name": "PRIVATE KEY----- private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/internal/service-mesh.key",
+        "line": 1,
+        "snippet": "-----BEGIN PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": false,
+        "size_bytes": 241
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 3.4,
+      "mosca_violated": false,
+      "mosca_margin_years": -1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "PRIVATE KEY----- private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "high",
+      "lifetime_years": 8,
+      "id": "ecdat-9730e904514c"
+    },
+    {
+      "artifact_type": "key",
+      "name": "PRIVATE KEY----- private key",
+      "category": "private-key",
+      "source": "key-store",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/public/payments-gateway.key",
+        "line": 1,
+        "snippet": "-----BEGIN PRIVATE KEY-----"
+      },
+      "properties": {
+        "encrypted": false,
+        "size_bytes": 1704
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 3.5,
+      "mosca_violated": false,
+      "mosca_margin_years": -1.75,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "effort": "high",
+        "note": "Rotate key material through the KMS/HSM that owns it.",
+        "for": "PRIVATE KEY----- private key",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        }
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 8,
+      "id": "ecdat-b2e01eebd2ec"
+    },
+    {
+      "artifact_type": "library",
+      "name": "cryptography",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+        "line": 2,
+        "snippet": "cryptography==41.0.7"
+      },
+      "properties": {
+        "version": "41.0.7",
+        "manifest": "requirements.txt",
+        "pqc": true,
+        "pqc_note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups",
+        "lib_category": "tls-crypto"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "cryptography",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups"
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-b68dcab07531"
+    },
+    {
+      "artifact_type": "library",
+      "name": "pyjwt",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+        "line": 3,
+        "snippet": "pyjwt==2.8.0"
+      },
+      "properties": {
+        "version": "2.8.0",
+        "manifest": "requirements.txt",
+        "pqc": false,
+        "pqc_note": "JWT algorithms are classical (RS/ES/Ed)",
+        "lib_category": "jose"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "pyjwt",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "JWT algorithms are classical (RS/ES/Ed)"
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-eca64c5d1624"
+    },
+    {
+      "artifact_type": "library",
+      "name": "pyopenssl",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+        "line": 8,
+        "snippet": "pyopenssl==23.3.0"
+      },
+      "properties": {
+        "version": "23.3.0",
+        "manifest": "requirements.txt",
+        "pqc": false,
+        "pqc_note": "Wraps OpenSSL; PQC only if linked OpenSSL supports it",
+        "lib_category": "tls-crypto"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "pyopenssl",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "Wraps OpenSSL; PQC only if linked OpenSSL supports it"
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-ef53323668fb"
+    },
+    {
+      "artifact_type": "library",
+      "name": "jsonwebtoken",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/package.json",
+        "line": 6,
+        "snippet": "\"jsonwebtoken\": \"9.0.2\""
+      },
+      "properties": {
+        "version": "9.0.2",
+        "manifest": "package.json",
+        "pqc": false,
+        "pqc_note": "JWT algorithms are classical",
+        "lib_category": "jose"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "jsonwebtoken",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "JWT algorithms are classical"
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-bc4b5d5f3632"
+    },
+    {
+      "artifact_type": "library",
+      "name": "jose",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/package.json",
+        "line": 8,
+        "snippet": "\"jose\": \"5.2.0\""
+      },
+      "properties": {
+        "version": "5.2.0",
+        "manifest": "package.json",
+        "pqc": false,
+        "pqc_note": "JOSE classical only (Go)",
+        "lib_category": "jose"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "jose",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "JOSE classical only (Go)"
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-a822efb84ab8"
+    },
+    {
+      "artifact_type": "library",
+      "name": "liboqs-python",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+        "line": 2,
+        "snippet": "liboqs-python==0.10.0"
+      },
+      "properties": {
+        "version": "0.10.0",
+        "manifest": "requirements.txt",
+        "pqc": true,
+        "pqc_note": "Python bindings to liboqs",
+        "lib_category": "pqc"
+      },
+      "quantum_impact": "pq_safe",
+      "quantum_year": null,
+      "severity": "info",
+      "risk_score": 0.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-9e29ca1b9b07"
+    },
+    {
+      "artifact_type": "library",
+      "name": "cryptography",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/interbank-pqc-pilot/requirements.txt",
+        "line": 3,
+        "snippet": "cryptography==44.0.0"
+      },
+      "properties": {
+        "version": "44.0.0",
+        "manifest": "requirements.txt",
+        "pqc": true,
+        "pqc_note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups",
+        "lib_category": "tls-crypto"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "cryptography",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "PyCA; AWS-LC variant ships ML-KEM hybrid TLS groups"
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-9ef6a4a8ddec"
+    },
+    {
+      "artifact_type": "library",
+      "name": "bcprov-jdk18on",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/pom.xml",
+        "line": 10,
+        "snippet": "<artifactId>bcprov-jdk18on</artifactId>"
+      },
+      "properties": {
+        "version": "1.72",
+        "manifest": "pom.xml",
+        "pqc": true,
+        "pqc_note": "BouncyCastle provider; PQC since 1.80",
+        "lib_category": "multi",
+        "pqc_outdated": true
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "bcprov-jdk18on",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "BouncyCastle provider; PQC since 1.80"
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-d6e7aeaed314"
+    },
+    {
+      "artifact_type": "library",
+      "name": "bcpkix-jdk18on",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/pom.xml",
+        "line": 15,
+        "snippet": "<artifactId>bcpkix-jdk18on</artifactId>"
+      },
+      "properties": {
+        "version": "1.72",
+        "manifest": "pom.xml",
+        "pqc": true,
+        "pqc_note": "BouncyCastle PKIX; PQC since 1.80",
+        "lib_category": "multi",
+        "pqc_outdated": true
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "bcpkix-jdk18on",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "BouncyCastle PKIX; PQC since 1.80"
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-0f6e8005f683"
+    },
+    {
+      "artifact_type": "library",
+      "name": "jose4j",
+      "category": "library",
+      "source": "library-manifest",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/pom.xml",
+        "line": 20,
+        "snippet": "<artifactId>jose4j</artifactId>"
+      },
+      "properties": {
+        "version": "0.9.4",
+        "manifest": "pom.xml",
+        "pqc": false,
+        "pqc_note": "JOSE has no PQC algorithms standardized yet",
+        "lib_category": "jose"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "jose4j",
+        "target": null,
+        "action": "upgrade",
+        "effort": "medium",
+        "effort_days": 15,
+        "note": "JOSE has no PQC algorithms standardized yet"
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-b9516ca05ee9"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "RSA",
+      "category": "asymmetric-encryption",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 4,
+        "snippet": "customer_master_key_spec = \"RSA_4096\""
+      },
+      "properties": {
+        "setting": "kms-key-spec",
+        "key_spec": "RSA_4096",
+        "note": "cloud KMS key material: RSA_4096"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.83,
+      "migration_months": 14,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-b1e59c1e1ca6"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "ECDSA-P256",
+      "category": "signature",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 11,
+        "snippet": "customer_master_key_spec = \"ECC_NIST_P256\""
+      },
+      "properties": {
+        "setting": "kms-key-spec",
+        "key_spec": "ECC_NIST_P256",
+        "note": "cloud KMS key material: ECC_NIST_P256"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": -1.17,
+      "migration_months": 14,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+ECDSA-P256",
+        "effort": "medium",
+        "for": "ECDSA-P256",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "sig_bytes": 64,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": 5132
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 7,
+      "id": "ecdat-b2fa4d2735eb"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.1",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 22,
+        "snippet": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+      },
+      "properties": {
+        "setting": "lb-ssl-policy",
+        "lb_policy": "ELBSecurityPolicy-TLS-1-1-2017-01",
+        "note": "permitted by load-balancer policy ELBSecurityPolicy-TLS-1-1-2017-01"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996.",
+        "for": "TLSv1.1",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-a44682050d17"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.2",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 22,
+        "snippet": "ssl_policy = \"ELBSecurityPolicy-TLS-1-1-2017-01\""
+      },
+      "properties": {
+        "setting": "lb-ssl-policy",
+        "lb_policy": "ELBSecurityPolicy-TLS-1-1-2017-01",
+        "note": "permitted by load-balancer policy ELBSecurityPolicy-TLS-1-1-2017-01"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "TLS 1.2 has no standardised hybrid group: PQC requires TLS 1.3 first.",
+        "for": "TLSv1.2",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-55e7f605b2d3"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.0",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 17,
+        "snippet": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996 and cannot negotiate a PQC group at all.",
+        "for": "TLSv1.0",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-13235a4c3f43"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.1",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 17,
+        "snippet": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.1"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 9.0,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996.",
+        "for": "TLSv1.1",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-6ea745b01bee"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.2",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 17,
+        "snippet": "ssl_protocols TLSv1 TLSv1.1 TLSv1.2;"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.2"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "TLS 1.2 has no standardised hybrid group: PQC requires TLS 1.3 first.",
+        "for": "TLSv1.2",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-ce3b64b04242"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "ECDH",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 18,
+        "snippet": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "ECDHE-RSA-AES128-SHA256"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "Highest HNDL priority: recorded handshakes are decryptable later.",
+        "for": "ECDH",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "ops_ms": 0.07
+        },
+        "wire_delta_bytes": 2207
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-1ebb6e47cd01"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "DH",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 18,
+        "snippet": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "DHE-RSA-AES128-SHA"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "Finite-field DH usually means an old protocol stack; budget for the stack, not the primitive.",
+        "for": "DH",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 256,
+          "ops_ms": 2.1
+        },
+        "wire_delta_bytes": 2016
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-b2f61e4e91b0"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "AES-128",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 18,
+        "snippet": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "AES128-SHA"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Key-size change only, no protocol or API change.",
+        "for": "AES-128",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-77b256df8fc7"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "3DES",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 18,
+        "snippet": "ssl_ciphers ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA;"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "DES-CBC3-SHA"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.4,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Disallowed by NIST SP 800-131A Rev.2 and only a 64-bit block.",
+        "for": "3DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-b668a8bd04fc"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.2",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 31,
+        "snippet": "ssl_protocols TLSv1.2 TLSv1.3;"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.2"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "TLS 1.2 has no standardised hybrid group: PQC requires TLS 1.3 first.",
+        "for": "TLSv1.2",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-1a5b90ebc93b"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.3",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 31,
+        "snippet": "ssl_protocols TLSv1.2 TLSv1.3;"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.3"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "X25519MLKEM768",
+        "effort": "low",
+        "note": "Already PQC-capable. Enable a hybrid group so one is actually negotiated.",
+        "for": "TLSv1.3",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 3,
+        "target_status": "hybrid, RFC 9794 style",
+        "target_perf": {
+          "pub_bytes": 1216,
+          "ct_bytes": 1120,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-c62dcfd00d24"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "ECDH",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+        "line": 32,
+        "snippet": "ssl_ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "ECDHE-ECDSA-AES256-GCM-SHA384",
+        "mode": "GCM"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.5,
+      "migration_months": 6,
+      "hndl_exposure": 0.6,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "Highest HNDL priority: recorded handshakes are decryptable later.",
+        "for": "ECDH",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "ops_ms": 0.07
+        },
+        "wire_delta_bytes": 2207
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-20dbc833da5a"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "RSA",
+      "category": "signature",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 4,
+        "snippet": "HostKey /etc/ssh/ssh_host_rsa_key"
+      },
+      "properties": {
+        "setting": "ssh-hostkey",
+        "raw": "rsa"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 8.2,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.33,
+      "migration_months": 4,
+      "hndl_exposure": 0.74,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 7,
+      "id": "ecdat-c35a750759a5"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "Ed25519",
+      "category": "signature",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 5,
+        "snippet": "HostKey /etc/ssh/ssh_host_ed25519_key"
+      },
+      "properties": {
+        "setting": "ssh-hostkey",
+        "raw": "ed25519"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 8.2,
+      "mosca_violated": true,
+      "mosca_margin_years": -0.33,
+      "migration_months": 4,
+      "hndl_exposure": 0.74,
+      "recommendation": {
+        "target": "ML-DSA-65",
+        "hybrid": "ML-DSA-65+Ed25519",
+        "effort": "medium",
+        "note": "Edwards curves are as Shor-exposed as NIST curves.",
+        "for": "Ed25519",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 204",
+        "target_perf": {
+          "pub_bytes": 1952,
+          "sig_bytes": 3309,
+          "ops_ms": 0.52
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "sig_bytes": 64,
+          "ops_ms": 0.05
+        },
+        "wire_delta_bytes": 5165
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 7,
+      "id": "ecdat-a246d8213b90"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "X25519",
+      "category": "key-agreement",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 7,
+        "snippet": "KexAlgorithms curve25519-sha256,ecdh-sha2-nistp256,diffie-hellman-group14-sha1"
+      },
+      "properties": {
+        "setting": "ssh-kex",
+        "raw": "curve25519-sha256"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.74,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "low",
+        "note": "The hybrid group is already the browser default, so this is a config change.",
+        "for": "X25519",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 32,
+          "ops_ms": 0.04
+        },
+        "wire_delta_bytes": 2240
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-1d6bbc145a44"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "ECDH",
+      "category": "key-agreement",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 7,
+        "snippet": "KexAlgorithms curve25519-sha256,ecdh-sha2-nistp256,diffie-hellman-group14-sha1"
+      },
+      "properties": {
+        "setting": "ssh-kex",
+        "raw": "ecdh-sha2-nistp256"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.74,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "Highest HNDL priority: recorded handshakes are decryptable later.",
+        "for": "ECDH",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "ops_ms": 0.07
+        },
+        "wire_delta_bytes": 2207
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-cea646b10912"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "Diffie-Hellman",
+      "category": "key-agreement",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 7,
+        "snippet": "KexAlgorithms curve25519-sha256,ecdh-sha2-nistp256,diffie-hellman-group14-sha1"
+      },
+      "properties": {
+        "setting": "ssh-kex",
+        "raw": "diffie-hellman-group14-sha1"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.3,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.74,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "for": "Diffie-Hellman",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-224801d30bbd"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "AES-256",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 8,
+        "snippet": "Ciphers aes256-gcm@openssh.com,aes128-ctr,3des-cbc"
+      },
+      "properties": {
+        "setting": "ssh-ciphers",
+        "raw": "aes256-gcm@openssh.com"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "X25519MLKEM768",
+        "effort": "medium",
+        "for": "AES-256",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "hybrid, RFC 9794 style",
+        "target_perf": {
+          "pub_bytes": 1216,
+          "ct_bytes": 1120,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-2cd0c3ff186a"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "AES-128",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 8,
+        "snippet": "Ciphers aes256-gcm@openssh.com,aes128-ctr,3des-cbc"
+      },
+      "properties": {
+        "setting": "ssh-ciphers",
+        "raw": "aes128-ctr",
+        "mode": "CTR",
+        "unauthenticated_mode": true
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Key-size change only, no protocol or API change.",
+        "for": "AES-128",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-b6054af619f9"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "3DES",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 8,
+        "snippet": "Ciphers aes256-gcm@openssh.com,aes128-ctr,3des-cbc"
+      },
+      "properties": {
+        "setting": "ssh-ciphers",
+        "raw": "3des-cbc",
+        "mode": "CBC",
+        "unauthenticated_mode": true
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "medium",
+      "risk_score": 4.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Disallowed by NIST SP 800-131A Rev.2 and only a 64-bit block.",
+        "for": "3DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-8b93c2ea0210"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "HMAC",
+      "category": "mac",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+        "line": 9,
+        "snippet": "MACs hmac-sha2-256,hmac-sha1"
+      },
+      "properties": {
+        "setting": "ssh-macs",
+        "raw": "hmac-sha2-256"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "HMAC",
+        "effort": "low",
+        "for": "HMAC",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 3,
+      "id": "ecdat-8c0d5166ce74"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.0",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 5,
+        "snippet": "SSLProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996 and cannot negotiate a PQC group at all.",
+        "for": "TLSv1.0",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-ad1fb22b61d9"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.1",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 5,
+        "snippet": "SSLProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.1"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996.",
+        "for": "TLSv1.1",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-88148e28c7f4"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.2",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 5,
+        "snippet": "SSLProtocol -all +TLSv1 +TLSv1.1 +TLSv1.2"
+      },
+      "properties": {
+        "setting": "tls-protocols",
+        "raw": "TLSv1.2"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 7.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.55,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "TLS 1.2 has no standardised hybrid group: PQC requires TLS 1.3 first.",
+        "for": "TLSv1.2",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-b71f0d267481"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "ECDH",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 6,
+        "snippet": "SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:DES-CBC3-SHA:RC4-SHA"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "ECDHE-RSA-AES256-SHA384"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "high",
+      "risk_score": 6.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": 0.49,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "hybrid": "X25519MLKEM768",
+        "effort": "medium",
+        "note": "Highest HNDL priority: recorded handshakes are decryptable later.",
+        "for": "ECDH",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 65,
+          "ops_ms": 0.07
+        },
+        "wire_delta_bytes": 2207
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-74b1a3ea1372"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "AES-256",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 6,
+        "snippet": "SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:DES-CBC3-SHA:RC4-SHA"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "AES256-SHA256"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "X25519MLKEM768",
+        "effort": "medium",
+        "for": "AES-256",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 3,
+        "target_status": "hybrid, RFC 9794 style",
+        "target_perf": {
+          "pub_bytes": 1216,
+          "ct_bytes": 1120,
+          "ops_ms": 0.09
+        },
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-5dcc527b7ff3"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "3DES",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 6,
+        "snippet": "SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:DES-CBC3-SHA:RC4-SHA"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "DES-CBC3-SHA"
+      },
+      "quantum_impact": "grover",
+      "quantum_year": 2038,
+      "severity": "low",
+      "risk_score": 3.8,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Disallowed by NIST SP 800-131A Rev.2 and only a 64-bit block.",
+        "for": "3DES",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-318aca5b9cb4"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "RC4",
+      "category": "cipher-suite",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/statements/apache-ssl.conf",
+        "line": 6,
+        "snippet": "SSLCipherSuite ECDHE-RSA-AES256-SHA384:AES256-SHA256:DES-CBC3-SHA:RC4-SHA"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "RC4-SHA"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "AES-256",
+        "effort": "low",
+        "note": "Prohibited in TLS by RFC 7465.",
+        "for": "RC4",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-620177ad180b"
+    },
+    {
+      "artifact_type": "configuration",
+      "name": "SHA-256",
+      "category": "hash",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+        "line": 3,
+        "snippet": "default_md          = sha256"
+      },
+      "properties": {
+        "setting": "signature-digest",
+        "raw": "sha256",
+        "note": "default signature digest for certificates issued from this config"
+      },
+      "quantum_impact": "classical_ok",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "Adequate today; SHA-384 is the CNSA 2.0 floor for long-lived data.",
+        "for": "SHA-256",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 3,
+      "id": "ecdat-769400bd743b"
+    },
+    {
+      "artifact_type": "configuration",
+      "name": "RSA-1024",
+      "category": "asymmetric-encryption",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+        "line": 11,
+        "snippet": "default_bits        = 1024"
+      },
+      "properties": {
+        "setting": "key-size",
+        "key_size": 1024,
+        "note": "1024-bit RSA default is below the NIST 2048-bit floor"
+      },
+      "quantum_impact": "shor_broken",
+      "quantum_year": 2033,
+      "severity": "critical",
+      "risk_score": 8.7,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": 0.7,
+      "recommendation": {
+        "target": "ML-KEM-768",
+        "alt": "ML-DSA-65",
+        "hybrid": "X25519MLKEM768",
+        "effort": "high",
+        "note": "RSA key transport and RSA signatures both fall to Shor. For TLS use a hybrid KEM group; for code signing use ML-DSA.",
+        "for": "RSA-1024",
+        "action": "replace",
+        "effort_days": 45,
+        "target_nist_level": 3,
+        "target_status": "FIPS 203",
+        "target_perf": {
+          "pub_bytes": 1184,
+          "ct_bytes": 1088,
+          "ops_ms": 0.05
+        },
+        "current_perf": {
+          "pub_bytes": 270,
+          "sig_bytes": 256,
+          "ops_ms": 1.4
+        },
+        "wire_delta_bytes": 1746
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-792d656499d5"
+    },
+    {
+      "artifact_type": "configuration",
+      "name": "SHA-1",
+      "category": "hash",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+        "line": 12,
+        "snippet": "default_md          = sha1"
+      },
+      "properties": {
+        "setting": "signature-digest",
+        "raw": "sha1",
+        "note": "default signature digest for certificates issued from this config"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "high",
+      "risk_score": 7.9,
+      "mosca_violated": false,
+      "mosca_margin_years": 3.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "SHA-384",
+        "effort": "low",
+        "note": "SHAttered 2017; NIST retires it in 2030.",
+        "for": "SHA-1",
+        "action": "replace",
+        "effort_days": 3,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 3,
+      "id": "ecdat-9f7c88f6bf5a"
+    },
+    {
+      "artifact_type": "protocol",
+      "name": "TLSv1.0",
+      "category": "protocol",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+        "line": 15,
+        "snippet": "MinProtocol = TLSv1"
+      },
+      "properties": {
+        "setting": "tls-min-version",
+        "raw": "TLSv1"
+      },
+      "quantum_impact": "broken_classically",
+      "quantum_year": null,
+      "severity": "critical",
+      "risk_score": 8.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.67,
+      "migration_months": 4,
+      "hndl_exposure": null,
+      "recommendation": {
+        "target": "TLSv1.3",
+        "effort": "medium",
+        "note": "Deprecated by RFC 8996 and cannot negotiate a PQC group at all.",
+        "for": "TLSv1.0",
+        "action": "replace",
+        "effort_days": 15,
+        "target_nist_level": 0,
+        "target_status": "active",
+        "wire_delta_bytes": null
+      },
+      "business_criticality": "high",
+      "lifetime_years": 5,
+      "id": "ecdat-dd2485db1668"
+    },
+    {
+      "artifact_type": "configuration",
+      "name": "OpenSSL SECLEVEL=1",
+      "category": "configuration-weakness",
+      "source": "configuration",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+        "line": 16,
+        "snippet": "CipherString = DEFAULT@SECLEVEL=1"
+      },
+      "properties": {
+        "setting": "tls-ciphers",
+        "raw": "DEFAULT@SECLEVEL=1",
+        "note": "SECLEVEL 0/1 permits SHA-1 signatures and <2048-bit keys"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 3.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.75,
+      "migration_months": 3,
+      "hndl_exposure": null,
+      "recommendation": null,
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-92b907ea65ad"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "AWS KMS",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/document-store/src/kms_envelope.py",
+        "line": 4,
+        "snippet": "import boto3"
+      },
+      "properties": {
+        "service_id": "aws-kms"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.25,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "AWS KMS",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-4c4adceb005b"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "Azure Key Vault",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/document-store/src/kms_envelope.py",
+        "line": 6,
+        "snippet": "from azure.keyvault.keys.crypto import CryptographyClient"
+      },
+      "properties": {
+        "service_id": "azure-keyvault"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.83,
+      "migration_months": 14,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "Azure Key Vault",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-887d3b008616"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "AWS KMS",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/document-store/src/kms_envelope.py",
+        "line": 8,
+        "snippet": "_kms = boto3.client(\"kms\")"
+      },
+      "properties": {
+        "service_id": "aws-kms"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.25,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "AWS KMS",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-b64ec8bec6b6"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "Google Cloud KMS",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/document-store/src/kms_envelope.py",
+        "line": 18,
+        "snippet": "client = kms.KeyManagementServiceClient()"
+      },
+      "properties": {
+        "service_id": "google-cloud-kms"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.2,
+      "mosca_violated": false,
+      "mosca_margin_years": 1.25,
+      "migration_months": 9,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "Google Cloud KMS",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "medium",
+      "lifetime_years": 5,
+      "id": "ecdat-407574629cc1"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "AWS KMS (Terraform)",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 2,
+        "snippet": "resource \"aws_kms_key\" \"pan_master\" {"
+      },
+      "properties": {
+        "service_id": "aws-kms"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.83,
+      "migration_months": 14,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "AWS KMS (Terraform)",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-d590c7fdd803"
+    },
+    {
+      "artifact_type": "cloud-service",
+      "name": "AWS KMS (Terraform)",
+      "category": "service",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 9,
+        "snippet": "resource \"aws_kms_key\" \"settlement_signing\" {"
+      },
+      "properties": {
+        "service_id": "aws-kms"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.83,
+      "migration_months": 14,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "AWS KMS (Terraform)",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-c8c5a9cf2f01"
+    },
+    {
+      "artifact_type": "hardware",
+      "name": "AWS CloudHSM",
+      "category": "hardware",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+        "line": 15,
+        "snippet": "resource \"aws_cloudhsm_v2_cluster\" \"branch_hsm\" {"
+      },
+      "properties": {
+        "service_id": "cloudhsm"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.5,
+      "migration_months": 18,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "AWS CloudHSM",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-b1cef5e74edf"
+    },
+    {
+      "artifact_type": "hardware",
+      "name": "PKCS#11 HSM interface",
+      "category": "hardware",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+        "line": 10,
+        "snippet": "#include \"pkcs11.h\""
+      },
+      "properties": {
+        "service_id": "pkcs11"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.5,
+      "migration_months": 18,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "PKCS#11 HSM interface",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-9b3e983e05dc"
+    },
+    {
+      "artifact_type": "hardware",
+      "name": "PKCS#11 HSM interface",
+      "category": "hardware",
+      "source": "source-code",
+      "evidence": {
+        "file_path": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+        "line": 43,
+        "snippet": "CK_MECHANISM mech = {CKM_RSA_PKCS_KEY_PAIR_GEN, NULL, 0};"
+      },
+      "properties": {
+        "service_id": "pkcs11"
+      },
+      "quantum_impact": "unknown",
+      "quantum_year": null,
+      "severity": "low",
+      "risk_score": 2.5,
+      "mosca_violated": false,
+      "mosca_margin_years": 0.5,
+      "migration_months": 18,
+      "hndl_exposure": null,
+      "recommendation": {
+        "for": "PKCS#11 HSM interface",
+        "target": null,
+        "action": "vendor-dependent",
+        "effort": "high",
+        "effort_days": 45,
+        "note": "Migration timing is set by the vendor roadmap. Track it and plan around it."
+      },
+      "business_criticality": "critical",
+      "lifetime_years": 5,
+      "id": "ecdat-7c3789c91d09"
+    }
+  ],
+  "events": [],
+  "probes": [],
+  "plan": {
+    "waves": [
+      {
+        "wave": 1,
+        "title": "Eliminate classically broken primitives",
+        "rationale": "These are exploitable today with classical hardware. They are not a quantum problem and should not wait for a quantum programme.",
+        "artifact_count": 18,
+        "work_units": 13,
+        "effort_days": 99,
+        "mosca_violations": 0,
+        "critical_or_high": 18,
+        "targets": [
+          "AES-256",
+          "ML-DSA-65",
+          "SHA-384",
+          "TLSv1.3"
+        ],
+        "artifact_ids": [
+          "ecdat-934638b42f41",
+          "ecdat-4d3b660c19e7",
+          "ecdat-25c1f5e7499f",
+          "ecdat-0118ce0a8c28",
+          "ecdat-5b88c7eb7182",
+          "ecdat-72560510f4ee",
+          "ecdat-a44682050d17",
+          "ecdat-13235a4c3f43",
+          "ecdat-6ea745b01bee",
+          "ecdat-27a7d76baf57",
+          "ecdat-6db27b096b65",
+          "ecdat-35a8b3c6023f",
+          "ecdat-368318428234",
+          "ecdat-ad1fb22b61d9",
+          "ecdat-88148e28c7f4",
+          "ecdat-dd2485db1668",
+          "ecdat-620177ad180b",
+          "ecdat-9f7c88f6bf5a"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-934638b42f41",
+            "name": "RSA certificate",
+            "severity": "critical",
+            "risk_score": 10.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/legacy/clearing-partner.crt",
+            "line": null,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+ECDSA-P256"
+          },
+          {
+            "id": "ecdat-4d3b660c19e7",
+            "name": "SHA-1",
+            "severity": "critical",
+            "risk_score": 9.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+            "line": 15,
+            "target": "SHA-384",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-25c1f5e7499f",
+            "name": "SHA-1",
+            "severity": "critical",
+            "risk_score": 9.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/settlement.py",
+            "line": 16,
+            "target": "SHA-384",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-0118ce0a8c28",
+            "name": "MD5",
+            "severity": "critical",
+            "risk_score": 9.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 50,
+            "target": "SHA-384",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-5b88c7eb7182",
+            "name": "MD5",
+            "severity": "critical",
+            "risk_score": 9.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+            "line": 30,
+            "target": "SHA-384",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-72560510f4ee",
+            "name": "SHA-1",
+            "severity": "critical",
+            "risk_score": 9.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+            "line": 25,
+            "target": "SHA-384",
+            "hybrid": null
+          }
+        ],
+        "start_month": 0.0,
+        "end_month": 1.4,
+        "months": 1.4
+      },
+      {
+        "wave": 2,
+        "title": "Upgrade cryptographic providers",
+        "rationale": "Libraries, runtimes and container images must expose ML-KEM and ML-DSA before anything above them can use them. This wave unblocks every later wave and is mostly dependency bumps.",
+        "artifact_count": 9,
+        "work_units": 9,
+        "effort_days": 135,
+        "mosca_violations": 0,
+        "critical_or_high": 0,
+        "targets": [],
+        "artifact_ids": [
+          "ecdat-b68dcab07531",
+          "ecdat-eca64c5d1624",
+          "ecdat-ef53323668fb",
+          "ecdat-bc4b5d5f3632",
+          "ecdat-d6e7aeaed314",
+          "ecdat-0f6e8005f683",
+          "ecdat-b9516ca05ee9",
+          "ecdat-a822efb84ab8",
+          "ecdat-9ef6a4a8ddec"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-b68dcab07531",
+            "name": "cryptography",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 2,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-eca64c5d1624",
+            "name": "pyjwt",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 3,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-ef53323668fb",
+            "name": "pyopenssl",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/requirements.txt",
+            "line": 8,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-bc4b5d5f3632",
+            "name": "jsonwebtoken",
+            "severity": "low",
+            "risk_score": 2.4,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/package.json",
+            "line": 6,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-d6e7aeaed314",
+            "name": "bcprov-jdk18on",
+            "severity": "low",
+            "risk_score": 2.4,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/pom.xml",
+            "line": 10,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-0f6e8005f683",
+            "name": "bcpkix-jdk18on",
+            "severity": "low",
+            "risk_score": 2.4,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/pom.xml",
+            "line": 15,
+            "target": null,
+            "hybrid": null
+          }
+        ],
+        "start_month": 1.4,
+        "end_month": 3.2,
+        "months": 1.9
+      },
+      {
+        "wave": 3,
+        "title": "Raise protocol floors",
+        "rationale": "TLS 1.2 and earlier cannot negotiate a hybrid key-exchange group at all, so the protocol floor has to move before PQC key agreement is even expressible on the wire.",
+        "artifact_count": 25,
+        "work_units": 17,
+        "effort_days": 273,
+        "mosca_violations": 2,
+        "critical_or_high": 15,
+        "targets": [
+          "AES-256",
+          "HMAC",
+          "ML-DSA-65",
+          "ML-KEM-768",
+          "SHA-384",
+          "TLSv1.3",
+          "X25519MLKEM768"
+        ],
+        "artifact_ids": [
+          "ecdat-792d656499d5",
+          "ecdat-c35a750759a5",
+          "ecdat-a246d8213b90",
+          "ecdat-55e7f605b2d3",
+          "ecdat-ce3b64b04242",
+          "ecdat-1ebb6e47cd01",
+          "ecdat-b2f61e4e91b0",
+          "ecdat-1a5b90ebc93b",
+          "ecdat-c62dcfd00d24",
+          "ecdat-20dbc833da5a",
+          "ecdat-b71f0d267481",
+          "ecdat-1d6bbc145a44",
+          "ecdat-cea646b10912",
+          "ecdat-224801d30bbd",
+          "ecdat-74b1a3ea1372",
+          "ecdat-77b256df8fc7",
+          "ecdat-b668a8bd04fc",
+          "ecdat-b6054af619f9",
+          "ecdat-8b93c2ea0210",
+          "ecdat-318aca5b9cb4",
+          "ecdat-92b907ea65ad",
+          "ecdat-2cd0c3ff186a",
+          "ecdat-8c0d5166ce74",
+          "ecdat-5dcc527b7ff3",
+          "ecdat-769400bd743b"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-792d656499d5",
+            "name": "RSA-1024",
+            "severity": "critical",
+            "risk_score": 8.7,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/openssl/openssl.cnf",
+            "line": 11,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-c35a750759a5",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 8.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+            "line": 4,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-a246d8213b90",
+            "name": "Ed25519",
+            "severity": "high",
+            "risk_score": 8.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/bastion/sshd_config",
+            "line": 5,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+Ed25519"
+          },
+          {
+            "id": "ecdat-55e7f605b2d3",
+            "name": "TLSv1.2",
+            "severity": "high",
+            "risk_score": 7.9,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 22,
+            "target": "TLSv1.3",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-ce3b64b04242",
+            "name": "TLSv1.2",
+            "severity": "high",
+            "risk_score": 7.9,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 17,
+            "target": "TLSv1.3",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-1ebb6e47cd01",
+            "name": "ECDH",
+            "severity": "high",
+            "risk_score": 7.9,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/nginx.conf",
+            "line": 18,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          }
+        ],
+        "start_month": 3.2,
+        "end_month": 7.0,
+        "months": 3.8
+      },
+      {
+        "wave": 4,
+        "title": "Migrate key agreement (harvest-now-decrypt-later)",
+        "rationale": "Recorded handshakes protected by ECDH, X25519 or finite-field DH are decryptable retroactively the moment a CRQC exists. Confidentiality of data already in flight depends on this wave, which is why it precedes signatures.",
+        "artifact_count": 7,
+        "work_units": 6,
+        "effort_days": 228,
+        "mosca_violations": 1,
+        "critical_or_high": 6,
+        "targets": [
+          "ML-KEM-768"
+        ],
+        "artifact_ids": [
+          "ecdat-0e1a5c6cd72b",
+          "ecdat-386244a2fd9b",
+          "ecdat-f13be6c85dc2",
+          "ecdat-9d73f8a51efd",
+          "ecdat-d258a8ebc8d4",
+          "ecdat-a7ba1cba6669",
+          "ecdat-b1e59c1e1ca6"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-0e1a5c6cd72b",
+            "name": "X25519",
+            "severity": "critical",
+            "risk_score": 9.9,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/treasury-archive/src/archive.py",
+            "line": 15,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-386244a2fd9b",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 8.3,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+            "line": 8,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-f13be6c85dc2",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 8.3,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+            "line": 9,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-9d73f8a51efd",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 7.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+            "line": 21,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-d258a8ebc8d4",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 7.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+            "line": 15,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          },
+          {
+            "id": "ecdat-a7ba1cba6669",
+            "name": "RSA",
+            "severity": "high",
+            "risk_score": 7.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/auth-service/src/main/java/com/meridian/auth/SessionTokenService.java",
+            "line": 44,
+            "target": "ML-KEM-768",
+            "hybrid": "X25519MLKEM768"
+          }
+        ],
+        "start_month": 7.0,
+        "end_month": 10.2,
+        "months": 3.2
+      },
+      {
+        "wave": 5,
+        "title": "Migrate signatures, certificates and key material",
+        "rationale": "Signature forgery requires a live CRQC rather than stored ciphertext, so this wave has real deadline pressure but no retroactive exposure. Composite certificates allow migration before every verifier is ready.",
+        "artifact_count": 17,
+        "work_units": 16,
+        "effort_days": 420,
+        "mosca_violations": 6,
+        "critical_or_high": 11,
+        "targets": [
+          "ML-DSA-65"
+        ],
+        "artifact_ids": [
+          "ecdat-c06a1659a385",
+          "ecdat-8301dd7056e1",
+          "ecdat-06baade1e2d9",
+          "ecdat-ada96e21f0e8",
+          "ecdat-9db344a0817a",
+          "ecdat-af78d0042b37",
+          "ecdat-3e5bca4eb0e8",
+          "ecdat-6e86b6e1c4d6",
+          "ecdat-d433f4497bb1",
+          "ecdat-646e082cb7f1",
+          "ecdat-a7baea880ec3",
+          "ecdat-bf0ad1c998e1",
+          "ecdat-620875102933",
+          "ecdat-b2e01eebd2ec",
+          "ecdat-9730e904514c",
+          "ecdat-e62a6533ebc2",
+          "ecdat-b2fa4d2735eb"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-c06a1659a385",
+            "name": "RSA private key",
+            "severity": "critical",
+            "risk_score": 10.0,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/config/secrets/jwt-signing.key",
+            "line": 1,
+            "target": "ML-DSA-65",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-8301dd7056e1",
+            "name": "RSA certificate",
+            "severity": "critical",
+            "risk_score": 9.9,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/infra/pki/ca/root-ca.pem",
+            "line": null,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+ECDSA-P256"
+          },
+          {
+            "id": "ecdat-06baade1e2d9",
+            "name": "Ed25519",
+            "severity": "critical",
+            "risk_score": 9.3,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+            "line": 16,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+Ed25519"
+          },
+          {
+            "id": "ecdat-ada96e21f0e8",
+            "name": "ECDSA",
+            "severity": "critical",
+            "risk_score": 9.3,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+            "line": 11,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+ECDSA-P256"
+          },
+          {
+            "id": "ecdat-9db344a0817a",
+            "name": "ECDSA",
+            "severity": "critical",
+            "risk_score": 8.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+            "line": 16,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+ECDSA-P256"
+          },
+          {
+            "id": "ecdat-af78d0042b37",
+            "name": "Ed25519",
+            "severity": "critical",
+            "risk_score": 8.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/service-mesh/mesh.go",
+            "line": 26,
+            "target": "ML-DSA-65",
+            "hybrid": "ML-DSA-65+Ed25519"
+          }
+        ],
+        "start_month": 10.2,
+        "end_month": 16.0,
+        "months": 5.8
+      },
+      {
+        "wave": 6,
+        "title": "Vendor-gated hardware and managed services",
+        "rationale": "HSM firmware and cloud KMS key types are outside your release cycle. Track vendor roadmaps and plan the cutover around them.",
+        "artifact_count": 9,
+        "work_units": 6,
+        "effort_days": 270,
+        "mosca_violations": 0,
+        "critical_or_high": 0,
+        "targets": [],
+        "artifact_ids": [
+          "ecdat-887d3b008616",
+          "ecdat-d590c7fdd803",
+          "ecdat-c8c5a9cf2f01",
+          "ecdat-b1cef5e74edf",
+          "ecdat-9b3e983e05dc",
+          "ecdat-7c3789c91d09",
+          "ecdat-4c4adceb005b",
+          "ecdat-b64ec8bec6b6",
+          "ecdat-407574629cc1"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-887d3b008616",
+            "name": "Azure Key Vault",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/document-store/src/kms_envelope.py",
+            "line": 6,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-d590c7fdd803",
+            "name": "AWS KMS (Terraform)",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 2,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-c8c5a9cf2f01",
+            "name": "AWS KMS (Terraform)",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 9,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-b1cef5e74edf",
+            "name": "AWS CloudHSM",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/infra/kms.tf",
+            "line": 15,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-9b3e983e05dc",
+            "name": "PKCS#11 HSM interface",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+            "line": 10,
+            "target": null,
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-7c3789c91d09",
+            "name": "PKCS#11 HSM interface",
+            "severity": "low",
+            "risk_score": 2.5,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+            "line": 43,
+            "target": null,
+            "hybrid": null
+          }
+        ],
+        "start_month": 16.0,
+        "end_month": 19.8,
+        "months": 3.8
+      },
+      {
+        "wave": 7,
+        "title": "Strengthen symmetric parameters",
+        "rationale": "Grover halves effective symmetric key length. AES-128 to AES-256 and SHA-256 to SHA-384 are parameter changes with no protocol impact, so they are safe to schedule last.",
+        "artifact_count": 7,
+        "work_units": 6,
+        "effort_days": 18,
+        "mosca_violations": 1,
+        "critical_or_high": 0,
+        "targets": [
+          "AES-256"
+        ],
+        "artifact_ids": [
+          "ecdat-b7494d658fed",
+          "ecdat-382e394df089",
+          "ecdat-d1dbab484a13",
+          "ecdat-a4f76d212921",
+          "ecdat-35ce468165e6",
+          "ecdat-baa2f0e590b3",
+          "ecdat-818db1391005"
+        ],
+        "top_findings": [
+          {
+            "id": "ecdat-b7494d658fed",
+            "name": "AES",
+            "severity": "medium",
+            "risk_score": 5.8,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/treasury-archive/src/archive.py",
+            "line": 21,
+            "target": "AES-256",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-382e394df089",
+            "name": "AES-CBC",
+            "severity": "medium",
+            "risk_score": 4.7,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 33,
+            "target": "AES-256",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-d1dbab484a13",
+            "name": "AES",
+            "severity": "medium",
+            "risk_score": 4.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/payments-service/src/tokenisation.py",
+            "line": 33,
+            "target": "AES-256",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-a4f76d212921",
+            "name": "AES-128",
+            "severity": "medium",
+            "risk_score": 4.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/edge-api/src/signing.ts",
+            "line": 35,
+            "target": "AES-256",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-35ce468165e6",
+            "name": "AES",
+            "severity": "medium",
+            "risk_score": 4.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/core-banking-adapter/AccountProtection.cs",
+            "line": 15,
+            "target": "AES-256",
+            "hybrid": null
+          },
+          {
+            "id": "ecdat-baa2f0e590b3",
+            "name": "3DES",
+            "severity": "medium",
+            "risk_score": 4.2,
+            "location": "/Users/garv/Documents/Projects/quantum-atlas/corpus/estate/branch-hsm-bridge/src/hsm_bridge.c",
+            "line": 24,
+            "target": "AES-256",
+            "hybrid": null
+          }
+        ],
+        "start_month": 19.8,
+        "end_month": 20.0,
+        "months": 0.2
+      }
+    ],
+    "total_effort_days": 1443,
+    "total_work_units": 73,
+    "crqc_year": 2033,
+    "years_until_crqc": 7,
+    "schedule": {
+      "engineers": 4,
+      "engineers_assumed": 4,
+      "days_per_engineer_month": 18.0,
+      "total_days": 1443,
+      "total_months": 20.0,
+      "finish_year": 2027,
+      "finish_label": "Q3 2027",
+      "crqc_year": 2033,
+      "meets_deadline": true,
+      "slack_years": 5.3,
+      "rows": [
+        {
+          "wave": 1,
+          "title": "Eliminate classically broken primitives",
+          "start_month": 0.0,
+          "end_month": 1.4,
+          "months": 1.4
+        },
+        {
+          "wave": 2,
+          "title": "Upgrade cryptographic providers",
+          "start_month": 1.4,
+          "end_month": 3.2,
+          "months": 1.9
+        },
+        {
+          "wave": 3,
+          "title": "Raise protocol floors",
+          "start_month": 3.2,
+          "end_month": 7.0,
+          "months": 3.8
+        },
+        {
+          "wave": 4,
+          "title": "Migrate key agreement (harvest-now-decrypt-later)",
+          "start_month": 7.0,
+          "end_month": 10.2,
+          "months": 3.2
+        },
+        {
+          "wave": 5,
+          "title": "Migrate signatures, certificates and key material",
+          "start_month": 10.2,
+          "end_month": 16.0,
+          "months": 5.8
+        },
+        {
+          "wave": 6,
+          "title": "Vendor-gated hardware and managed services",
+          "start_month": 16.0,
+          "end_month": 19.8,
+          "months": 3.8
+        },
+        {
+          "wave": 7,
+          "title": "Strengthen symmetric parameters",
+          "start_month": 19.8,
+          "end_month": 20.0,
+          "months": 0.2
+        }
+      ]
+    },
+    "nothing_to_do": 9
+  },
+  "cbom_path": "/Users/garv/Documents/Projects/quantum-atlas/results/9f79164f-957f-45d6-94f3-8a05d29fd6f5.cbom.json",
+  "sarif_path": "/Users/garv/Documents/Projects/quantum-atlas/results/9f79164f-957f-45d6-94f3-8a05d29fd6f5.sarif.json",
+  "report_path": "/Users/garv/Documents/Projects/quantum-atlas/results/9f79164f-957f-45d6-94f3-8a05d29fd6f5.report.md"
+}

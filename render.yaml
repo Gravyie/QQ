@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: quantum-atlas
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
